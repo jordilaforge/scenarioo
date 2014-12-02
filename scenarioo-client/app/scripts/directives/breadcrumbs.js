@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('scenarioo.directives').directive('scBreadcrumb', function ($routeParams, $location, $route, $compile, $filter, $sce, BreadcrumbsService, ScShareStepPopup) {
+angular.module('scenarioo.directives').directive('scBreadcrumb', function ($routeParams, $location, $route, $compile, $filter, $sce, BreadcrumbsService, ScShareStepPopup, ScCompareStepPopup) {
 
     var limit = 50;
 
@@ -62,6 +62,10 @@ angular.module('scenarioo.directives').directive('scBreadcrumb', function ($rout
 
             scope.showStepLinks = function () {
                 ScShareStepPopup.showShareStepPopup();
+            };
+
+            scope.showCompareLinks = function () {
+                ScCompareStepPopup.showCompareStepPopup();
             };
         }
     };
