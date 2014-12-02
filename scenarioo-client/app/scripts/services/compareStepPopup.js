@@ -45,21 +45,54 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     showCompareStepPopup: showCompareStepPopup
   };
 
-}).controller('ScCompareStepPopupController', function ($scope, $modalInstance, SharePageService, $location) {
+}).controller('ScCompareStepPopupController', function ($location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, SelectedBranchAndBuild) {
 
-  var currentBrowserLocation = $location.absUrl();
+  loadBranchesAndBuilds();
 
-  $scope.pageUrl = (function() {
-    if(angular.isDefined(SharePageService.getPageUrl())) {
-      return SharePageService.getPageUrl();
-    } else {
-      return currentBrowserLocation;
+  function loadBranchesAndBuilds() {
+    BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
+        $scope.branchesAndBuilds = branchesAndBuilds;
+      }, function onFailure(error) {
+        console.log(error);
+      }
+    );
+  }
+
+  $scope.setBranchForComparison = function (branch) {
+    $scope.branchesAndBuilds.selectedBranchForComparison = branch;
+  };
+
+  $scope.setBuildForComparison = function (selectedBranchForComparison, build) {
+    $scope.branchesAndBuilds.selectedBuildForComparison = build;
+  };
+
+  $scope.getDisplayName = function (build) {
+    if (angular.isUndefined(build)) {
+      return '';
     }
-  }());
-  $scope.imageUrl = SharePageService.getImageUrl();
 
-  $scope.eMailSubject = encodeURIComponent('Link to Scenarioo');
-  $scope.eMailUrl = encodeURIComponent($scope.pageUrl);
+    if(angular.isDefined(build.displayName) && build.displayName !== null) {
+      return build.displayName;
+    }
+
+    if ($scope.isBuildAlias(build)) {
+      return build.linkName;
+    } else {
+      return 'Revision: ' + build.build.revision;
+    }
+  };
+
+  $scope.isBuildAlias = function (build) {
+    if (angular.isUndefined(build)) {
+      return false;
+    }
+
+    return build.build.name !== build.linkName;
+  };
+
+  $scope.compare = function () {
+
+  };
 
   $scope.close = function () {
     $modalInstance.dismiss('cancel');
