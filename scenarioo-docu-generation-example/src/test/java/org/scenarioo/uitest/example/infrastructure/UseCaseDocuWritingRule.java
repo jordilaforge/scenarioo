@@ -58,7 +58,7 @@ public class UseCaseDocuWritingRule implements TestRule {
 		return new Statement() {
 			
 			private final ScenarioDocuWriter docuWriter = new ScenarioDocuWriter(DOCU_BUILD_DIRECTORY,
-					EXAMPLE_BRANCH_NAME, EXAMPLE_BUILD_NAME);
+					EXAMPLE_BRANCH_NAME, MultipleBuildsRule.getCurrentBuildName());
 			
 			@Override
 			public void evaluate() throws Throwable {
@@ -91,11 +91,16 @@ public class UseCaseDocuWritingRule implements TestRule {
 		useCase.setName(name);
 		useCase.setDescription(description);
 		useCase.addDetail("Webtest Class", testClass.getName());
+		addLabelsIfPresentOnTestClass(testClass, useCase);
+		return useCase;
+	}
+
+	private static void addLabelsIfPresentOnTestClass(final Class<?> testClass,
+			UseCase useCase) {
 		Labels labels = testClass.getAnnotation(Labels.class);
 		if (labels != null) {
 			useCase.getLabels().setLabels(new HashSet<String>(Arrays.asList(labels.value())));
 		}
-		return useCase;
 	}
 	
 	public static String createUseCaseName(final Class<?> testClass) {
