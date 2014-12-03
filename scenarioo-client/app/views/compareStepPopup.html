@@ -17,10 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div id="stepLinksDialog">
   <div class="modal-header">
-    <h1 class="modal-title" id="myModalLabel">Compare with: </h1>
+    <h1 class="modal-title" id="myModalLabel">Comparison</h1> <b>Compare to Branch: </b>
+    {{branchesAndBuilds.selectedBranch.branch.name}} <b> Build: </b>{{getDisplayName(branchesAndBuilds.selectedBuild)}}
   </div>
   <div class="modal-body">
 
+    Select Branch and Build to compare with</br></br>
     <!-- Branch selection dropdown -->
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -34,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             {{branch.branch.name}}</a>
         </li>
       </ul>
-    </div>
+    </div> </br>
 
     <!-- Build selection dropdown -->
     <div class="dropdown">
@@ -57,6 +59,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="close()">Cancel</button>
-    <button type="button" class="btn btn-primary" ng-click="compare()">Compare</button>
+    <button type="button" class="btn btn-primary" ng-click="startCompare()">Compare</button>
   </div>
 </div>
