@@ -1,6 +1,7 @@
 package org.scenarioo.business.comparison;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,11 +14,14 @@ public class CompareScreenshotTest {
 	private static final String FILE_50_2 = new String("src/test/resources/image_50_2.png");
 	private static final String FILE_TOTAL_BLACK = new String("src/test/resources/image_total_black.png");
 	private static final String FILE_TOTAL_WHITE = new String("src/test/resources/image_total_white.png");
+	private static final String FILE_50_300 = new String("src/test/resources/image_50_300.png");
+	private static final String FILE_TOTAL_WHITE_300 = new String("src/test/resources/image_total_white_300.png");
+	private static final String FILE_TOTAL_BLACK_300 = new String("src/test/resources/image_total_black_300.png");
 	
 	
-	private String fileA;
-	private String fileB;
-	private int similarityInPrecent;
+	private String imageA;
+	private String imageB;
+	private int differenceInPercent;
 	
 	@Test
 	public void ifFirstParameterIsNull_expectException() {
@@ -44,22 +48,22 @@ public class CompareScreenshotTest {
 	}
 	
 	private void givenFirstParameterIsNullAndSecondIsSet() {
-		fileA = null;
-		fileB = FILE_1;
+		imageA = null;
+		imageB = FILE_1;
 	}
 	
 	private void givenSecondParameterIsNullAndFirstIsSet() {
-		fileA = FILE_1;
-		fileB = null;
+		imageA = FILE_1;
+		imageB = null;
 	}
 
 	@Test
-	public void ifBothImagesAreEqual_returns100() {
+	public void ifBothImagesAreEqual_returns0() {
 		givenBothFilesAreEqual();
 		
 		whenComparingScreenshots();
 		
-		expectReturns100();
+		expectReturns0();
 	}
 	
 	
@@ -73,39 +77,40 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns50() {
-		Assert.assertEquals(50, similarityInPrecent);
+		  Assert.assertTrue("Error, Difference is to high", 52 >= differenceInPercent);
+		  Assert.assertTrue("Error, Difference is to low",  48  <= differenceInPercent);
 	}
 
 	private void givenBothFilesAreHalfEqual() {
-		fileA = FILE_50_1;
-		fileB = FILE_TOTAL_WHITE;
+		imageA = FILE_50_1;
+		imageB = FILE_TOTAL_WHITE;
 	}
 
 	private void givenBothFilesAreEqual() {
-		fileA = FILE_1;
-		fileB = FILE_1;
+		imageA = FILE_1;
+		imageB = FILE_1;
 	}
 
 	private void givenBothFilesAreTotalDifferent() {
-		fileA = FILE_TOTAL_BLACK;
-		fileB = FILE_TOTAL_WHITE;
+		imageA = FILE_TOTAL_BLACK;
+		imageB = FILE_TOTAL_WHITE;
 	}
 	private void whenComparingScreenshots() {
 		CompareScreenshot test = new CompareScreenshot();
-		similarityInPrecent = test.compare(fileA,fileB);
+		differenceInPercent = test.compare(imageA,imageB);
 	}
 
 	private void expectReturns100() {
-		Assert.assertEquals(100, similarityInPrecent);
+		Assert.assertEquals(100, differenceInPercent);
 	}
 	
 	@Test
-	public void ifImagesAreTotalDifferent_returns0() {
+	public void ifImagesAreTotalDifferent_returns100() {
 		givenBothFilesAreTotalDifferent();
 		
 		whenComparingScreenshots();
 		
-		expectReturns0();
+		expectReturns100();
 	}
 	
 	@Test
@@ -118,16 +123,64 @@ public class CompareScreenshotTest {
 	}
 	
 	private void expectReturns0() {
-		Assert.assertEquals(0, similarityInPrecent);
+		Assert.assertEquals(0, differenceInPercent);
 	}
 	
 	private void expectReturnsLessThan50() {
-		Assert.assertTrue(similarityInPrecent<=50);
+		Assert.assertTrue(differenceInPercent<=50);
 	}
 	
 	private void givenImageColorAndBigger() {
-		fileA = FILE_1;
-		fileB = FILE_2;
+		imageA = FILE_1;
+		imageB = FILE_2;
 	}
+	
+	@Test
+	public void ifImagesAreTotalDifferentBig_returns100() {
+		givenBothFilesAreTotalDifferentBig();
+		
+		whenComparingScreenshots();
+		
+		expectReturns100();
+	}
+
+	private void givenBothFilesAreTotalDifferentBig() {
+		imageA = FILE_TOTAL_WHITE_300;
+		imageB = FILE_TOTAL_BLACK_300;
+		
+	}
+	
+	@Test
+	public void ifImagesAreHalfTheSameBig_returns50() {
+		givenBothFilesAreHalfEqualBig();
+		
+		whenComparingScreenshots();
+		
+		expectReturns50();
+	}
+
+	private void givenBothFilesAreHalfEqualBig() {
+		imageA = FILE_50_300;
+		imageB = FILE_TOTAL_BLACK_300;
+	}
+	
+	@Test
+	public void ifImagesAreNotSameSize_expectException() {
+		givenParameterNotSameSize();
+		
+		try {
+			whenComparingScreenshots();
+			Assert.fail();
+		} catch(IllegalArgumentException e) {
+			Assert.assertEquals("Image scale is not the same", e.getMessage());
+		}
+	}
+
+	private void givenParameterNotSameSize() {
+		imageA=FILE_TOTAL_BLACK_300;
+		imageB=FILE_TOTAL_BLACK;
+		
+	}
+
 	
 }

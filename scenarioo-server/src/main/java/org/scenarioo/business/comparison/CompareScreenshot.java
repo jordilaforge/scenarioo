@@ -1,40 +1,51 @@
 package org.scenarioo.business.comparison;
 
-
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javax.imageio.ImageIO;
 import javax.swing.GrayFilter;
 
 public class CompareScreenshot {
 
-	// Atributes
-	protected BufferedImage img1 = null;
-	protected BufferedImage img2 = null;
-	protected BufferedImage imgc = null;
+	// Attributes
 	protected int comparex = 10;
 	protected int comparey = 10;
 	protected int factorD = 10;
-	final static double maxdiff = 3400;
+	protected int tolerance = 50;
 
-	// returns similarity in percentage
-	// 100% = same image
-	public int compare(String fileA, String fileB) {
+	// returns difference in percentage
+	// 0% = same image 100% = totally different image
+	public int compare(String fileA, String fileB){
 		checkPreconditions(fileA, fileB);
-		// convert to gray images.
-		img1 = imageToBufferedImage(GrayFilter
-				.createDisabledImage(loadJPG(fileA)));
-		img2 = imageToBufferedImage(GrayFilter
-				.createDisabledImage(loadJPG(fileB)));
-		return compareBufferedImage(img1,img2);
-		}
+		Image imageA=loadImage(fileA);
+		Image imageB=loadImage(fileB);
+		int diffvalue = compareImages(imageA,imageB);
+		int maxdiff = calculateMaxDiff(imageA,imageB);
+		double percentage = calculatePercentage(diffvalue, maxdiff);
+		return (int) Math.round(percentage);
+	}
 	
-	public int compareBufferedImage(BufferedImage img1, BufferedImage img2){
-		double totaldiff = 0;
+	
+	private double calculatePercentage(int diffvalue, int maxdiff) {
+		float percent = (diffvalue * 100.0f) / maxdiff;
+		return percent;
+	}
+
+
+	public int compareImages(Image imageA, Image imageB) {
+		// convert to gray images.
+		BufferedImage img1 = imageToBufferedImage(GrayFilter
+				.createDisabledImage(imageA));
+		BufferedImage img2 = imageToBufferedImage(GrayFilter
+				.createDisabledImage(imageB));
+		checkScale(img1, img2);
+		int totaldiff = 0;
 		// how big are each section
 		int blocksx = (int) (img1.getWidth() / comparex);
 		int blocksy = (int) (img1.getHeight() / comparey);
@@ -49,13 +60,40 @@ public class CompareScreenshot {
 				totaldiff += diff;
 			}
 		}
-		if(totaldiff==0){
-			return 100;
+		return totaldiff;
+	}
+
+	private void checkScale(BufferedImage img1, BufferedImage img2) {
+		if ((img1.getHeight() != img2.getHeight())
+				&& (img1.getWidth() != img2.getWidth())) {
+			throw new IllegalArgumentException("Image scale is not the same");
 		}
-		if(totaldiff==maxdiff){
-			return 0;
-		}
-		return (int) Math.round((totaldiff/maxdiff)*100);
+
+	}
+
+
+	public int calculateMaxDiff(Image bimg1,Image bimg2) {
+		BufferedImage orig1 = imageToBufferedImage(bimg1);
+		BufferedImage orig2 = imageToBufferedImage(bimg2);
+		BufferedImage im = new BufferedImage(orig1.getWidth(),orig1.getHeight(),BufferedImage.TYPE_BYTE_BINARY);
+		 // We need its raster to set the pixels' values.
+		     WritableRaster raster = im.getRaster();
+		     // Put the pixels on the raster. Note that only values 0 and 1 are used for the pixels.
+		     // You could even use other values: in this type of image, even values are black and odd
+		     // values are white.
+		     for(int h=0;h<orig1.getHeight();h++)
+		       for(int w=0;w<orig1.getWidth();w++)
+		         raster.setSample(w,h,0,0);
+		BufferedImage im2 = new BufferedImage(orig1.getWidth(),orig1.getHeight(),BufferedImage.TYPE_BYTE_BINARY);
+			 // We need its raster to set the pixels' values.
+			     WritableRaster raster2 = im2.getRaster();
+			     // Put the pixels on the raster. Note that only values 0 and 1 are used for the pixels.
+			     // You could even use other values: in this type of image, even values are black and odd
+			     // values are white.
+			     for(int h=0;h<orig1.getHeight();h++)
+			       for(int w=0;w<orig1.getWidth();w++)
+			         raster2.setSample(w,h,0,1);
+		return compareImages(im,im2);
 	}
 
 	private void checkPreconditions(String fileA, String fileB) {
@@ -68,9 +106,6 @@ public class CompareScreenshot {
 					"Second file argument must not be null.");
 		}
 	}
-	
-
-
 
 	// returns a value specifying some kind of average brightness in the image.
 	protected int getAverageBrightness(BufferedImage img) {
@@ -94,19 +129,19 @@ public class CompareScreenshot {
 	}
 
 	// read a jpeg/png file into a buffered image
-	protected static Image loadJPG(String filename) {
+	protected static Image loadImage(String filename) {
 		FileInputStream in = null;
 		try {
 			in = new FileInputStream(filename);
 		} catch (java.io.FileNotFoundException io) {
-			System.out.println("File Not Found");
+			io.printStackTrace();
 		}
 		BufferedImage bi = null;
 		try {
 			bi = ImageIO.read(in);
 			in.close();
 		} catch (java.io.IOException io) {
-			System.out.println("IOException");
+			io.printStackTrace();
 		}
 		return bi;
 	}
