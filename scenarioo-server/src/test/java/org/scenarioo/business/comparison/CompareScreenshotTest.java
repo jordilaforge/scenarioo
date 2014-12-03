@@ -7,12 +7,12 @@ import org.junit.Test;
 
 public class CompareScreenshotTest {
 
-	private static final String FILE_1 = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_1.png");
-	private static final String FILE_2 = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_2.png");
-	private static final String FILE_50_1 = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_50_1.png");
-	private static final String FILE_50_2 = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_50_2.png");
-	private static final String FILE_TOTAL_BLACK = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_total_black.png");
-	private static final String FILE_TOTAL_WHITE = new String("/home/scenarioo/scenarioo-ip5/scenarioo-server/src/test/resources/image_total_white.png");
+	private static final String FILE_1 = new String("src/test/resources/image_1.png");
+	private static final String FILE_2 = new String("src/test/resources/image_2.png");
+	private static final String FILE_50_1 = new String("src/test/resources/image_50_1.png");
+	private static final String FILE_50_2 = new String("src/test/resources/image_50_2.png");
+	private static final String FILE_TOTAL_BLACK = new String("src/test/resources/image_total_black.png");
+	private static final String FILE_TOTAL_WHITE = new String("src/test/resources/image_total_white.png");
 	
 	
 	private String fileA;

@@ -192,6 +192,7 @@ public class BuildImporter {
 				summary.setBuildStatistics(aggregator.getBuildStatistics());
 				addSuccessfullyImportedBuild(availableBuilds, summary);
 				lastSuccessfulScenarioBuild.updateLastSuccessfulScenarioBuild(summary, this, availableBuilds);
+				// Vorberechnung Build-Vergleich hier starten
 				LOGGER.info("  SUCCESS on importing build: " + summary.getIdentifier().getBranchName() + "/"
 						+ summary.getIdentifier().getBuildName());
 			} else {
