@@ -45,7 +45,7 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     showCompareStepPopup: showCompareStepPopup
   };
 
-}).controller('ScCompareStepPopupController', function ($location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, SelectedBranchAndBuild) {
+}).controller('ScCompareStepPopupController', function ($filter, $location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, SelectedBranchAndBuild) {
 
   loadBranchesAndBuilds();
 
@@ -64,6 +64,7 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
 
   $scope.setBuildForComparison = function (selectedBranchForComparison, build) {
     $scope.branchesAndBuilds.selectedBuildForComparison = build;
+    SelectedBranchAndBuild.setBranchAndBuildForComparison(selectedBranchForComparison,build);
   };
 
   $scope.getDisplayName = function (build) {
@@ -90,8 +91,13 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     return build.build.name !== build.linkName;
   };
 
-  $scope.compare = function () {
-
+  $scope.startCompare = function () {
+    $modalInstance.dismiss('close');
+    if (window.location.href.indexOf('/step/') > -1){
+      $location.path('/compare/step');
+    } else {
+      $location.path('/compare/scenario');
+    }
   };
 
   $scope.close = function () {

@@ -115,6 +115,9 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
 
   }
 
+  function getBranchAndBuildForComparison() {
+  }
+
   return {
     BRANCH_KEY: BRANCH_KEY,
     BUILD_KEY: BUILD_KEY,
@@ -141,7 +144,9 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
      */
     callOnSelectionChange: registerSelectionChangeCallback,
 
-    setBranchAndBuildForComparison: setBranchAndBuildForComparison
+    setBranchAndBuildForComparison: setBranchAndBuildForComparison,
+
+    getBranchAndBuildForComparison: getBranchAndBuildForComparison
   };
 
 });
