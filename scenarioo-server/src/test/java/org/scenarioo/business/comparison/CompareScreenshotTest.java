@@ -28,7 +28,7 @@ public class CompareScreenshotTest {
 	private String imageA;
 	private String imageB;
 	private double similarityInPercent;
-	private double accuracy = 2.00;
+	private double accuracy = 1;
 
 	@Test
 	public void ifFirstParameterIsNull_expectException() {

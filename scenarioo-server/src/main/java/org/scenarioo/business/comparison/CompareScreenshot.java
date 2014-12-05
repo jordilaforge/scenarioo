@@ -9,24 +9,27 @@ import javax.imageio.ImageIO;
 
 public class CompareScreenshot {
 
-	final int threshold = 10;
+	final int threshold = 0;
 
 	//Method to calculate similarity of two Files(JPG/PNG) returns percentage of similarity
 	//0% = Images totally different
 	//100% = Images are the same
-	public double compare(String file1, String file2) {
+	public int compare(String file1, String file2) {
 		checkPreconditions(file1, file2);
 		Image image1 = loadImage(file1);
 		Image image2 = loadImage(file2);
-		return compareImages(image1, image2);
+		return (int) Math.round(100*(compareImages(image1, image2)));
 	}
 
 	//Method to calculate similarity of two Images returns percentage of similarity
-	//0% = Images totally different
-	//100% = Images are the same
+	//0.00 = Images totally different
+	//100.00 = Images are the same
 	private double compareImages(Image imageA, Image imageB) {
 		BufferedImage img1 = imageToBufferedImage(imageA);
 		BufferedImage img2 = imageToBufferedImage(imageB);
+		if(img1.getHeight()>10000|img1.getWidth()>10000|img2.getHeight()>10000|img2.getWidth()>10000){
+			throw new IllegalArgumentException("Images are to Big");
+		}
 		if (img1.getHeight() != img2.getHeight() | img1.getWidth() != img2.getWidth()) {
 			return compareBufferedImagesNotSameScale(img1, img2);
 		}
@@ -37,8 +40,8 @@ public class CompareScreenshot {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {
 			throw new IllegalArgumentException("Images have same Resolution!");
 		}
-		double area_img1 = img1.getHeight() * img1.getWidth();
-		double area_img2 = img2.getHeight() * img2.getWidth();
+		int area_img1 = img1.getHeight() * img1.getWidth();
+		int area_img2 = img2.getHeight() * img2.getWidth();
 		double area_diff = Math.min(img1.getHeight(), img2.getHeight()) * Math.min(img1.getWidth(), img2.getWidth());
 		double percentageAreaDiff = (area_diff / Math.max(area_img1, area_img2));
 		BufferedImage subimage;
@@ -50,13 +53,12 @@ public class CompareScreenshot {
 			subimage = img2.getSubimage(img1.getMinX(), img1.getMinY(), img1.getWidth(), img1.getHeight());
 			similarity = compareBufferedImages(img1, subimage);
 		}
-
-		return ((percentageAreaDiff) * (similarity / 100)) * 100;
+		return (percentageAreaDiff*similarity);
 	}
 	
 	//Method to calculate similarity of two BufferedImages returns percentage of similarity
-	//0% = Images totally different
-	//100% = Images are the same
+	//0.00 = Images totally different
+	//100.00 = Images are the same
 	private double compareBufferedImages(BufferedImage img1, BufferedImage img2) {
 		if ((img1.getHeight() == img2.getHeight()) && (img1.getWidth() == img2.getWidth())) {
 			int pixelsimilarity = 0;
@@ -69,20 +71,14 @@ public class CompareScreenshot {
 					}
 				}
 			}
-			return calculatePercentage(pixelsimilarity, totalPixel);
+			return ((double)pixelsimilarity/totalPixel);
 		} else {
 			throw new IllegalArgumentException("Images not the Same Size");
 		}
 
 	}
 
-	// Method to calculate percentage of two Integer values
-	private double calculatePercentage(int quotient, int divisor) {
-		if (divisor == 0) {
-			throw new IllegalArgumentException("'divisor' is 0");
-		}
-		return ((quotient * 100.0f) / divisor);
-	}
+
 
 	// Method to transfer Image to BufferedImage
 	protected static BufferedImage imageToBufferedImage(Image img) {
