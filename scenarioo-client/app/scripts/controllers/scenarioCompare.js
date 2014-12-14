@@ -17,27 +17,17 @@
 
 'use strict';
 
-angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, BranchesAndBuilds, SelectedBranchAndBuild) {
+angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, BranchesAndBuilds) {
 
-  loadBranchesAndBuilds();
-  //loadSelectedBranchAndBuild();
+    loadBranchesAndBuilds();
 
-  function loadBranchesAndBuilds() {
-    BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
-        $scope.branchesAndBuilds = branchesAndBuilds;
-      }, function onFailure(error) {
-        console.log(error);
-      }
-    );
-  }
-
-  /*function loadSelectedBranchAndBuild() {
-    SelectedBranchAndBuild.getBranchAndBuildForComparison().then(function onSuccess(selectedBranchAndBuild) {
-        $scope.selectedBranchAndBuild = selectedBranchAndBuild;
-      }, function onFailure(error) {
-        console.log(error);
-      }
-    );
-  }*/
+    function loadBranchesAndBuilds() {
+        BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
+            $scope.branchesAndBuilds = branchesAndBuilds;
+        }, function onFailure(error) {
+            console.log(error);
+        }
+        );
+    }
 
 });

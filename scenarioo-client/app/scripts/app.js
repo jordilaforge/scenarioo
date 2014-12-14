@@ -70,16 +70,16 @@ angular.module('scenarioo', ['scenarioo.controllers','ui.bootstrap'])
             stepInPageOccurrence: '@stepInPageOccurrence',
             breadcrumbId: 'step'
         })
-      .when('/compare/step', {
-        templateUrl: 'views/stepCompare.html',
-        controller: 'StepCompareCtrl',
-        breadcrumbId: 'stepCompare'
-      })
-      .when('/compare/scenario', {
-        templateUrl: 'views/scenarioCompare.html',
-        controller: 'ScenarioCompareCtrl',
-        breadcrumbId: 'scenarioCompare'
-      })
+        .when('compare/step', {
+            templateUrl: 'views/stepCompare.html',
+            controller: 'StepCompareCtrl',
+            breadcrumbId: 'stepCompare'
+        })
+        .when('/compare/scenario', {
+            templateUrl: 'views/scenarioCompare.html',
+            controller: 'ScenarioCompareCtrl',
+            breadcrumbId: 'scenarioCompare'
+        })
         .otherwise({
             redirectTo: '/'
         });

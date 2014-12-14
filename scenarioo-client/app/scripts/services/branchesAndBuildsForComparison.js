@@ -17,11 +17,9 @@
 
 'use strict';
 
-angular.module('scenarioo.services').factory('BranchesAndBuilds', function ($rootScope, Config, BranchesResource, $q, SelectedBranchAndBuild) {
-    var selected;
-    var index;
+angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', function ($rootScope, Config, BranchesResource, $q, SelectedBranchAndBuild) {
 
-    var branchesAndBuildsData = function () {
+    var branchesAndBuildsForComparisonData = function () {
         var deferred = $q.defer();
         BranchesResource.query({}, function findSelectedBranchAndBuild(branches) {
             if (branches.length === 0) {
@@ -33,20 +31,21 @@ angular.module('scenarioo.services').factory('BranchesAndBuilds', function ($roo
                 branches: branches
             };
 
-            if (SelectedBranchAndBuild.isDefined()) {
-                selected = SelectedBranchAndBuild.selected();
+            if (SelectedBranchAndBuild.isDefinedForComparison()) {
+                var selected = SelectedBranchAndBuild.selectedForComparison();
 
+                var index;
                 for (index = 0; index < loadedData.branches.length; index++) {
                     if (loadedData.branches[index].branch.name === selected.branch) {
-                        loadedData.selectedBranch = loadedData.branches[index];
+                        loadedData.selectedBranchForComparison = loadedData.branches[index];
                     }
                 }
 
-                if (angular.isDefined(loadedData.selectedBranch)) {
-                    var allBuildsOnSelectedBranch = loadedData.selectedBranch.builds;
-                    for (index = 0; index < loadedData.selectedBranch.builds.length; index++) {
+                if (angular.isDefinedForComparison(loadedData.selectedBranchForComparison)) {
+                    var allBuildsOnSelectedBranch = loadedData.selectedBranchForComparison.builds;
+                    for (index = 0; index < loadedData.selectedBranchForComparison.builds.length; index++) {
                         if (allBuildsOnSelectedBranch[index].linkName === selected.build) {
-                            loadedData.selectedBuild = allBuildsOnSelectedBranch[index];
+                            loadedData.selectedBuildForComparison = allBuildsOnSelectedBranch[index];
                         }
                     }
                 }
@@ -61,6 +60,6 @@ angular.module('scenarioo.services').factory('BranchesAndBuilds', function ($roo
     };
 
     return {
-        getBranchesAndBuilds: branchesAndBuildsData
+        getBranchesAndBuildsForComparison: branchesAndBuildsForComparisonData
     };
 });

@@ -19,89 +19,93 @@
 
 angular.module('scenarioo.services').factory('ScCompareStepPopup', function (localStorageService, $modal) {
 
-  // This is required to avoid multiple popups (they could be opened using keyboard shortcuts)
-  var modalIsCurrentlyOpen = false;
+    // This is required to avoid multiple popups (they could be opened using keyboard shortcuts)
+    var modalIsCurrentlyOpen = false;
 
-  function showCompareStepPopup() {
-    if (modalIsCurrentlyOpen === true) {
-      return;
+    function showCompareStepPopup() {
+        if (modalIsCurrentlyOpen === true) {
+            return;
+        }
+
+        modalIsCurrentlyOpen = true;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'views/compareStepPopup.html',
+            controller: 'ScCompareStepPopupController',
+            windowClass: 'modal-small',
+            backdropFade: true
+        });
+
+        modalInstance.result['finally'](function () {
+            modalIsCurrentlyOpen = false;
+        });
     }
 
-    modalIsCurrentlyOpen = true;
+    return {
+        showCompareStepPopup: showCompareStepPopup
+    };
 
-    var modalInstance = $modal.open({
-      templateUrl: 'views/compareStepPopup.html',
-      controller: 'ScCompareStepPopupController',
-      windowClass: 'modal-small',
-      backdropFade: true
-    });
+}).controller('ScCompareStepPopupController', function ($filter, $location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild) {
 
-    modalInstance.result['finally'](function () {
-      modalIsCurrentlyOpen = false;
-    });
-  }
+    loadBranchesAndBuilds();
 
-  return {
-    showCompareStepPopup: showCompareStepPopup
-  };
-
-}).controller('ScCompareStepPopupController', function ($filter, $location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, SelectedBranchAndBuild) {
-
-  loadBranchesAndBuilds();
-
-  function loadBranchesAndBuilds() {
-    BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
-        $scope.branchesAndBuilds = branchesAndBuilds;
-      }, function onFailure(error) {
-        console.log(error);
-      }
-    );
-  }
-
-  $scope.setBranchForComparison = function (branch) {
-    $scope.branchesAndBuilds.selectedBranchForComparison = branch;
-  };
-
-  $scope.setBuildForComparison = function (selectedBranchForComparison, build) {
-    $scope.branchesAndBuilds.selectedBuildForComparison = build;
-    SelectedBranchAndBuild.setBranchAndBuildForComparison(selectedBranchForComparison,build);
-  };
-
-  $scope.getDisplayName = function (build) {
-    if (angular.isUndefined(build)) {
-      return '';
+    function loadBranchesAndBuilds() {
+        BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
+                $scope.branchesAndBuilds = branchesAndBuilds;
+            }
+        );
+        BranchesAndBuildsForComparison.getBranchesAndBuildsForComparison().then(function onSuccess(branchesAndBuildsForComparison) {
+                $scope.branchesAndBuildsForComparison = branchesAndBuildsForComparison;
+            }
+        );
     }
 
-    if(angular.isDefined(build.displayName) && build.displayName !== null) {
-      return build.displayName;
-    }
+    $scope.setBranchForComparison = function (branchCompare) {
+        $scope.branchesAndBuildsForComparison.selectedBranchForComparison = branchCompare;
+        localStorageService.remove(SelectedBranchAndBuild.COMPARE_BUILD_KEY);
+        $location.search(SelectedBranchAndBuild.COMPARE_BRANCH_KEY, branchCompare.branch.name);
+    };
 
-    if ($scope.isBuildAlias(build)) {
-      return build.linkName;
-    } else {
-      return 'Revision: ' + build.build.revision;
-    }
-  };
+    $scope.setBuildForComparison = function (selectedBranchForComparison, buildCompare) {
+        $scope.branchesAndBuildsForComparison.selectedBuildForComparison = buildCompare;
+        $location.search(SelectedBranchAndBuild.COMPARE_BUILD_KEY, buildCompare.linkName);
+    };
 
-  $scope.isBuildAlias = function (build) {
-    if (angular.isUndefined(build)) {
-      return false;
-    }
+    $scope.getDisplayName = function (buildCompare) {
+        if (angular.isUndefined(buildCompare)) {
+            return '';
+        }
 
-    return build.build.name !== build.linkName;
-  };
+        if (angular.isDefined(buildCompare.displayName) && buildCompare.displayName !== null) {
+            return buildCompare.displayName;
+        }
 
-  $scope.startCompare = function () {
-    $modalInstance.dismiss('close');
-    if (window.location.href.indexOf('/step/') > -1){
-      $location.path('/compare/step');
-    } else {
-      $location.path('/compare/scenario');
-    }
-  };
+        if ($scope.isBuildAlias(buildCompare)) {
+            return buildCompare.linkName;
+        } else {
+            return 'Revision: ' + buildCompare.build.revision;
+        }
+    };
 
-  $scope.close = function () {
-    $modalInstance.dismiss('cancel');
-  };
+    $scope.isBuildAlias = function (buildCompare) {
+        if (angular.isUndefined(buildCompare)) {
+            return false;
+        }
+
+        return buildCompare.build.name !== buildCompare.linkName;
+    };
+
+    $scope.startCompare = function () {
+        $modalInstance.dismiss('close');
+        if (window.location.href.indexOf('/step/') > -1) {
+            $location.path('/compare/step');
+        } else {
+            $location.path('/compare/scenario');
+        }
+    };
+
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
 
 });
