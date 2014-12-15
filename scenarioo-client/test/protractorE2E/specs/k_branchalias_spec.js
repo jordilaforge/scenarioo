@@ -24,7 +24,7 @@ scenarioo.describeUseCase('Branch aliases', function () {
 
         browser.get('#');
 
-        homePage.selectUseCase(0);
+        homePage.selectUseCase(1);
         usecasePage.selectScenario(0);
         scenarioPage.openStepByName('Step 1: Wikipedia Suche');
         stepPage.assertPreviousStepIsDisabled();
@@ -32,8 +32,8 @@ scenarioo.describeUseCase('Branch aliases', function () {
 
         // Restore initial state for other tests
         browser.get('#/manage?tab=branchAliases');
-        branchAliasesPage.chooseBranch('example-branch');
         branchAliasesPage.deleteAlias(0);
         branchAliasesPage.save();
+        branchAliasesPage.chooseBranch('example-branch');
     });
 });

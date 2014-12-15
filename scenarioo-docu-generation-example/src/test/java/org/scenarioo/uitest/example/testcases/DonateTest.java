@@ -27,47 +27,40 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.scenarioo.uitest.example.builds;
+package org.scenarioo.uitest.example.testcases;
 
-import static org.scenarioo.uitest.example.config.ExampleUITestDocuGenerationConfig.*;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
 import org.junit.Test;
-import org.scenarioo.api.ScenarioDocuWriter;
-import org.scenarioo.model.docu.entities.Branch;
-import org.scenarioo.uitest.example.infrastructure.MultipleBuildsRule;
+import org.scenarioo.uitest.example.infrastructure.DocuDescription;
+import org.scenarioo.uitest.example.infrastructure.DonateStepDataGenerator;
+import org.scenarioo.uitest.example.infrastructure.UITest;
 
 /**
- * A simple example test to show how to save example branch and build description files.
- * 
- * Usually you would create these files from inside your CI build scripts or somewhere inside your UI testing
- * framework/infrastructure that runs all your UI tests.
- * 
- * The branch description might even be created manually (as an xml file in your documentation directory), whenever you
- * create a new branch.
+ * This use case is especially made for testing "visual regression testing". Therefore the three different builds of 
+ * this use case have all kinds of variations in their screenshots and in the scenario step sequence.
  */
-public class SaveBranchAndBuildDescriptionExampleTest {
+@DocuDescription(name = "Donate", description = "Donate money to Wikipedia.")
+public class DonateTest extends UITest {
 	
-	private static ScenarioDocuWriter docuWriter;
+	private DonateStepDataGenerator generator = new DonateStepDataGenerator(this);
 	
-	@BeforeClass
-	public static void createDocuWriter() {
-		DOCU_BUILD_DIRECTORY.mkdirs(); // make sure the root directory is precreated
-		docuWriter = new ScenarioDocuWriter(DOCU_BUILD_DIRECTORY, EXAMPLE_BRANCH_NAME, MultipleBuildsRule.getCurrentBuildName());
-	}
-	
-	@AfterClass
-	public static void flushAllAsynchronouslyWrittenData() {
-		docuWriter.flush();
+	@After
+	public void after() {
+		generator.flush();
 	}
 	
 	@Test
-	public void write_branch_description() {
-		Branch branch = new Branch();
-		branch.setName(EXAMPLE_BRANCH_NAME);
-		branch.setDescription("Just an example development branch from example docu generation example.");
-		docuWriter.saveBranchDescription(branch);
+	@DocuDescription(description = "User tries to find out how to donate to Wikipedia.")
+	public void find_donate_page() {
+		generator.openWikipediaHomePage();
+		generator.clickGermanLink();
+		generator.enterTextThanks();
+		generator.enterTextIWantToDonate();
+		generator.selectLanguageEnglish();
+		generator.clickSearchButtonToSeeResults();
+		generator.clickDonateLinkToSeeDonatePage();
+		generator.clickPrivacyPolicyToSeePrivacyPolicy();
+		generator.clickSwissGermanLink();
 	}
 	
 }

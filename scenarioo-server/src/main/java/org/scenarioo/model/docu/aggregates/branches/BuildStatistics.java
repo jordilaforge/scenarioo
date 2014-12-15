@@ -1,15 +1,17 @@
 package org.scenarioo.model.docu.aggregates.branches;
 
 public class BuildStatistics {
-	private int numberOfFailedScenarios;
-	private int numberOfSuccessfulScenarios;
-	private int numberOfUseCases;
+
+	private int numberOfFailedScenarios = 0;
+	private int numberOfSuccessfulScenarios = 0;
+	private int numberOfSuccessfulUseCases = 0;
+	private int numberOfFailedUseCases = 0;
 
 	public int getNumberOfFailedScenarios() {
 		return numberOfFailedScenarios;
 	}
 
-	public void setNumberOfFailedScenarios(int numberOfFailedScenarios) {
+	public void setNumberOfFailedScenarios(final int numberOfFailedScenarios) {
 		this.numberOfFailedScenarios = numberOfFailedScenarios;
 	}
 
@@ -17,16 +19,26 @@ public class BuildStatistics {
 		return numberOfSuccessfulScenarios;
 	}
 
-	public void setNumberOfSuccessfulScenarios(int numberOfSuccessfulScenarios) {
+	public void setNumberOfSuccessfulScenarios(final int numberOfSuccessfulScenarios) {
 		this.numberOfSuccessfulScenarios = numberOfSuccessfulScenarios;
 	}
 
-	public int getNumberOfUseCases() {
-		return numberOfUseCases;
+
+	public int getNumberOfSuccessfulUseCases() {
+		return numberOfSuccessfulUseCases;
 	}
 
-	public void setNumberOfUseCases(int numberOfUseCases) {
-		this.numberOfUseCases = numberOfUseCases;
+
+	public void setNumberOfSuccessfulUseCases(final int numberOfUseCases) {
+		this.numberOfSuccessfulUseCases = numberOfUseCases;
+	}
+
+	public int getNumberOfFailedUseCases() {
+		return numberOfFailedUseCases;
+	}
+
+	public void setNumberOfFailedUseCases(final int numberOfFailedUseCases) {
+		this.numberOfFailedUseCases = numberOfFailedUseCases;
 	}
 
 	public void incrementSuccessfulScenario() {
@@ -37,7 +49,13 @@ public class BuildStatistics {
 		numberOfFailedScenarios++;
 	}
 
-	public void incrementUseCase() {
-		numberOfUseCases++;
+	public void incrementSuccessfulUseCase() {
+		numberOfSuccessfulUseCases++;
 	}
+
+	public void incrementFailedUseCase() {
+		numberOfFailedUseCases++;
+	}
+
+
 }
