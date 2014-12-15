@@ -35,7 +35,8 @@ public class CompareScreenshot {
 		}
 		return compareBufferedImages(img1, img2);
 	}
-
+	
+	//Method for Images with different scale Factors
 	private double compareBufferedImagesNotSameScale(BufferedImage img1, BufferedImage img2) {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {
 			throw new IllegalArgumentException("Images have same Resolution!");
