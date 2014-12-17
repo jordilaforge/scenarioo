@@ -70,7 +70,24 @@ angular.module('scenarioo', ['scenarioo.controllers','ui.bootstrap'])
             stepInPageOccurrence: '@stepInPageOccurrence',
             breadcrumbId: 'step'
         })
-        .when('compare/step', {
+        .when('/step/:useCaseName/:scenarioName/:pageName/:pageOccurrence/:stepInPageOccurrence/compare', {
+            templateUrl: 'views/stepCompare.html',
+            controller: 'StepCompareCtrl',
+            useCaseName: '@useCaseName',
+            scenarioName: '@scenarioName',
+            pageName: '@pageName',
+            pageOccurrence: '@pageOccurrence',
+            stepInPageOccurrence: '@stepInPageOccurrence',
+            breadcrumbId: 'stepCompare'
+        })
+        .when('/scenario/:useCaseName/:scenarioName/compare', {
+            templateUrl: 'views/scenarioCompare.html',
+            controller: 'ScenarioCompareCtrl',
+            useCaseName: '@useCaseName',
+            scenarioName: '@scenarioName',
+            breadcrumbId: 'scenarioCompare'
+        })
+        .when('/compare/step', {
             templateUrl: 'views/stepCompare.html',
             controller: 'StepCompareCtrl',
             breadcrumbId: 'stepCompare'

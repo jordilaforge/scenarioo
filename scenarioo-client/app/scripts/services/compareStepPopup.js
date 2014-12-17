@@ -45,7 +45,13 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
         showCompareStepPopup: showCompareStepPopup
     };
 
-}).controller('ScCompareStepPopupController', function ($filter, $location, $scope, $modalInstance, localStorageService, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild) {
+}).controller('ScCompareStepPopupController', function ($filter, $location, $scope, $modalInstance, $routeParams, localStorageService, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild) {
+
+    var useCaseName = $routeParams.useCaseName;
+    var scenarioName = $routeParams.scenarioName;
+    var pageName = $routeParams.pageName;
+    var pageOccurrence = $routeParams.pageOccurrence;
+    var stepInPageOccurrence = $routeParams.stepInPageOccurrence;
 
     loadBranchesAndBuilds();
 
@@ -98,10 +104,16 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     $scope.startCompare = function () {
         $modalInstance.dismiss('close');
         if (window.location.href.indexOf('/step/') > -1) {
-            $location.path('/compare/step');
-        } else {
+            $location.path('#/step/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/' + encodeURIComponent(pageName) +
+            '/' + pageOccurrence + '/' + stepInPageOccurrence + '/compare/');
+        } else if (window.location.href.indexOf('/scenario/') > -1) {
             $location.path('/compare/scenario');
         }
+    };
+
+    $scope.getLinkToStep = function (pageName, pageOccurrence, stepInPageOccurrence) {
+        return '#/step/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/' + encodeURIComponent(pageName) +
+          '/' + pageOccurrence + '/' + stepInPageOccurrence + '/compare/';
     };
 
     $scope.close = function () {

@@ -30,4 +30,6 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
         );
     }
 
+
+
 });

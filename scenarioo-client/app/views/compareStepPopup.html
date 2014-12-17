@@ -27,11 +27,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         <span class="glyphicon glyphicon-hdd"></span> Branch:
-        {{branchesAndBuilds.selectedBranchForComparison.branch.name}}
+        {{branchesAndBuildsForComparison.selectedBranchForComparison.branch.name}}
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="branch in branchesAndBuilds.branches" ng-hide="branch.alias">
+        <li ng-repeat="branch in branchesAndBuildsForComparison.branches" ng-hide="branch.alias">
           <a ng-click="setBranchForComparison(branch)">
             {{branch.branch.name}}</a>
         </li>
@@ -42,13 +42,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         <span class="glyphicon glyphicon-folder-open"></span> Build:
-        {{getDisplayName(branchesAndBuilds.selectedBuildForComparison)}}
-        <span ng-class="[getStatusStyleClass(branchesAndBuilds.selectedBuildForComparison.build.status), 'label']">
-        {{branchesAndBuilds.selectedBuildForComparison.build.status}}</span>
+        {{getDisplayName(branchesAndBuildsForComparison.selectedBuildForComparison)}}
+        <span ng-class="[getStatusStyleClass(branchesAndBuildsForComparison.selectedBuildForComparison.build.status), 'label']">
+        {{branchesAndBuildsForComparison.selectedBuildForComparison.build.status}}</span>
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="build in branchesAndBuilds.selectedBranchForComparison.builds" ng-hide="isBuildAlias(build)">
+        <li ng-repeat="build in branchesAndBuildsForComparison.selectedBranchForComparison.builds" ng-hide="isBuildAlias(build)">
           <a ng-click="setBuildForComparison(selectedBranchForComparison, build)">
             {{getDisplayName(build)}} ({{build.build.date | scDateTime}})
             <span ng-class="[getStatusStyleClass(build.build.status), 'label']">{{build.build.status}}</span>

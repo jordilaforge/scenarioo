@@ -19,5 +19,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <div>
 Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{branchesAndBuilds.selectedBuild.build.date | scDateTime}})
-    with Revision: {{branchesAndBuilds.selectedBranchForComparison.build.revision}} ({{branchesAndBuilds.selectedBuildForComparison.build.date | scDateTime}}) on Step-Level.
+    with Revision: {{branchesAndBuildsForComparison}} ({{selectedBranchAndBuild.compareBuild.build.date | scDateTime}}) on Step-Level.
 </div>
+
+<!-- Navigation toolbar -->
+<div class="step-navigation row sc-space-top sc-space-bottom">
+
+  <!-- Step & Page Navigation -->
+  <div class="col-lg-5">
+
+    <!-- Pages navigation -->
+    <div class="btn-group">
+      <div ng-click="goToPreviousPage()" class="btn btn-default" ng-disabled="isFirstPage()" id="prevPageBtn">
+        <i class="icon-with-padding icon-large icon-double-angle-left" tooltip="Previous Page [Ctrl+Left]" tooltip-placement="bottom"></i>
+      </div>
+      <div class="btn btn-default btn-no-hover"><span tooltip="of all pages in this scenario" tooltip-placement="bottom">Page {{getCurrentPageIndexForDisplay()}} of {{stepStatistics.totalNumberOfPagesInScenario}}</span></div>
+      <div ng-click="goToNextPage()" class="btn btn-default" ng-disabled="isLastPage()" id="nextPageBtn">
+        <i class="icon-with-padding icon-large icon-double-angle-right" tooltip="Next Page [Ctrl+Right]" tooltip-placement="bottom"></i>
+      </div>
+    </div>
+
+    <!-- Steps navigation -->
+    <div class="btn-group">
+      <div ng-click="goToPreviousStep()" class="btn btn-default" ng-disabled="isFirstStep()" id="prevStepBtn">
+        <i class="icon-with-padding icon-large icon-angle-left" tooltip="Previous Step [Left]" tooltip-placement="bottom"></i>
+      </div>
+      <div class="btn btn-default btn-no-hover"><span tooltip="of all steps in this scenario" tooltip-placement="bottom">Step {{getCurrentStepIndexForDisplay()}} of {{stepStatistics.totalNumberOfStepsInScenario}}</span></div>
+      <div ng-click="goToNextStep()" class="btn btn-default" ng-disabled="isLastStep()" id="nextStepBtn">
+        <i class="icon-with-padding icon-large icon-angle-right" tooltip="Next Step [Right]" tooltip-placement="bottom"></i>
+      </div>
+    </div>
+
+    <!-- Substep information -->
+    <div class="btn-group">
+      <div class="btn btn-comment">Substep {{getStepIndexInCurrentPageForDisplay()}} of {{getNumberOfStepsInCurrentPageForDisplay()}} on current page</div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-7">
+    <span class="pull-right">
+      <div class="btn-group">
+        <div ng-click="goToMode1()" class="btn btn-default" ng-disabled="isMode1()" id="mode1Btn">
+          Mode 1
+        </div>
+        <div ng-click="goToMode2()" class="btn btn-default" ng-disabled="isMode2()" id="mode2Btn">
+          Mode 2
+        </div>
+      </div>
+    </span>
+  </div>
+
+</div>
+
+<!-- screenshot and information -->
+<sc-meta-data-panel linking-variable="stepShowMetadata">
+        <div class="sc-screenshot-border">
+          <img ng-src="{{getScreenShotUrl()}}" class="sc-screenshot"/>
+        </div>
