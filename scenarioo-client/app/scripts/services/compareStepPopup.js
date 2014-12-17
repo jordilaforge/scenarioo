@@ -104,16 +104,11 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     $scope.startCompare = function () {
         $modalInstance.dismiss('close');
         if (window.location.href.indexOf('/step/') > -1) {
-            $location.path('#/step/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/' + encodeURIComponent(pageName) +
+            $location.path('/step/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/' + encodeURIComponent(pageName) +
             '/' + pageOccurrence + '/' + stepInPageOccurrence + '/compare/');
         } else if (window.location.href.indexOf('/scenario/') > -1) {
-            $location.path('/compare/scenario');
+            $location.path('/scenario/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/compare');
         }
-    };
-
-    $scope.getLinkToStep = function (pageName, pageOccurrence, stepInPageOccurrence) {
-        return '#/step/' + encodeURIComponent(useCaseName) + '/' + encodeURIComponent(scenarioName) + '/' + encodeURIComponent(pageName) +
-          '/' + pageOccurrence + '/' + stepInPageOccurrence + '/compare/';
     };
 
     $scope.close = function () {

@@ -87,16 +87,6 @@ angular.module('scenarioo', ['scenarioo.controllers','ui.bootstrap'])
             scenarioName: '@scenarioName',
             breadcrumbId: 'scenarioCompare'
         })
-        .when('/compare/step', {
-            templateUrl: 'views/stepCompare.html',
-            controller: 'StepCompareCtrl',
-            breadcrumbId: 'stepCompare'
-        })
-        .when('/compare/scenario', {
-            templateUrl: 'views/scenarioCompare.html',
-            controller: 'ScenarioCompareCtrl',
-            breadcrumbId: 'scenarioCompare'
-        })
         .otherwise({
             redirectTo: '/'
         });
