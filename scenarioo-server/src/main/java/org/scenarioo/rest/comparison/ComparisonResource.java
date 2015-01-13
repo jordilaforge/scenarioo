@@ -1,19 +1,27 @@
 package org.scenarioo.rest.comparison;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.apache.log4j.Logger;
+import org.scenarioo.api.ScenarioDocuReader;
+import org.scenarioo.business.comparison.CompareScreenshot;
+import org.scenarioo.model.docu.entities.Step;
 import org.scenarioo.rest.scenario.dto.PageComparison;
 import org.scenarioo.rest.scenario.dto.ScenarioComparison;
 import org.scenarioo.rest.scenario.dto.StepComparison;
+import org.scenarioo.rest.step.StepResource;
 	
 @Path("/rest/branch/{branchName}/build/{buildName}/usecase/{usecaseName}/scenario/")
 public class ComparisonResource {
 
+	private static final Logger LOGGER = Logger.getLogger(StepResource.class);
 	
 	@GET
 	@Produces({ "application/xml" })
@@ -23,7 +31,52 @@ public class ComparisonResource {
 			@PathParam("scenarioName") final String scenarioName, @PathParam("compareBranch") final String compareBranch,
 			@PathParam("compareBuild") final String compareBuild) {
 		
-		return createDummy(scenarioName, usecaseName,branchName, buildName, compareBranch, compareBuild);
+		//return createDummy(scenarioName, usecaseName,branchName, buildName, compareBranch, compareBuild);
+		return createCompare(scenarioName, usecaseName,branchName, buildName, compareBranch, compareBuild);
+	}
+
+	private ScenarioComparison createCompare(String scenarioName, String usecaseName, String branchName, String buildName, String compareBranch, String compareBuild) {
+		ScenarioComparison compare = new ScenarioComparison();
+		compare.setScenarioName(scenarioName);
+		compare.setUsecaseName(usecaseName);
+		compare.setBranchName(branchName);
+		compare.setBuildName(buildName);
+		compare.setCompareBranch(compareBranch);
+		compare.setCompareBuild(compareBuild);
+		ScenarioDocuReader root = new ScenarioDocuReader(new File("/home/scenarioo/scenarioo-ip5/scenarioo-docu-generation-example/build/scenarioDocuExample"));
+		List<Step> steps = root.loadSteps(branchName, buildName, usecaseName, scenarioName);
+		ArrayList<File> screenshots = new ArrayList<File>();
+		for(int i=0;i<steps.size();++i){
+			screenshots.add(root.getScreenshotFile(branchName, buildName, usecaseName, scenarioName, steps.get(i).getStepDescription().getScreenshotFileName()));
+			LOGGER.info(screenshots.get(i).getAbsolutePath());
+		}
+		List<Step> steps_compare = root.loadSteps(branchName, buildName, usecaseName, scenarioName);
+		ArrayList<File> screenshots_compare = new ArrayList<File>();
+		for(int i=0;i<steps_compare.size();++i){
+			screenshots_compare.add(root.getScreenshotFile(branchName, buildName, usecaseName, scenarioName, steps.get(i).getStepDescription().getScreenshotFileName()));
+			LOGGER.info(screenshots_compare.get(i).getAbsolutePath());
+		}
+		CompareScreenshot compare_screenshot = new CompareScreenshot();
+		ArrayList<StepComparison> stepListPage1 = new ArrayList<StepComparison>();
+		PageComparison page1 = new PageComparison();
+		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
+		for(int i=0;i<screenshots.size();++i){
+				StepComparison step1page1 = new StepComparison();
+				step1page1.setStepName("Page1Step1"+i);
+				step1page1.setSimilarity(compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(i).getAbsolutePath()));
+				step1page1.setLeftURL(screenshots.get(i).getAbsolutePath());
+				step1page1.setRighURL(screenshots_compare.get(i).getAbsolutePath());
+				stepListPage1.add(step1page1);
+				LOGGER.info("Comparison:"+screenshots.get(i).getAbsolutePath()+screenshots_compare.get(i).getAbsolutePath());
+				
+			
+		}
+
+		page1.setPageName("page");
+		page1.setSteplist(stepListPage1);
+		pageList.add(page1);
+		compare.setPagelist(pageList);
+		return compare;
 	}
 
 	private ScenarioComparison createDummy(String scenarioName,String usecaseName, String branchName, String buildName, String compareBranch, String compareBuild) {
