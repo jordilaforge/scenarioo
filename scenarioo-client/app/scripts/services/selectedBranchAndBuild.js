@@ -115,6 +115,8 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
             }
         }, true);
 
+
+
     /**
      * @returns true if branch and build are both specified (i.e. not 'undefined').
      */
@@ -123,10 +125,10 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
     }
 
     /**
-     * @returns true if branch, build as well as a second branch and build for comparison are specified (i.e. not 'undefined').
+     * @returns true if a second branch and build for comparison are specified (i.e. not 'undefined').
      */
     function isBranchAndBuildDefinedForComparison() {
-        return angular.isDefined(selectedBranch) && angular.isDefined(selectedBuild) && angular.isDefined(selectedBranchForComparison) && angular.isDefined(selectedBuildForComparison);
+        return angular.isDefined(selectedBranchForComparison) && angular.isDefined(selectedBuildForComparison);
     }
 
     function registerSelectionChangeCallback(callback) {
@@ -135,12 +137,6 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         if (isBranchAndBuildDefined()) {
             callback(selected);
         }
-    }
-
-    function setBranchAndBuildForComparison(branchForComparison, buildForComparison) {
-        selectedBranchForComparison = branchForComparison;
-        selectedBuildForComparison = buildForComparison;
-
     }
 
     return {
@@ -166,7 +162,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         isDefined: isBranchAndBuildDefined,
 
         /**
-         * Returns true only if both values (branch and build) are defined.
+         * Returns true only if both values (compareBranch and compareBuild) are defined.
          */
         isDefinedForComparison: isBranchAndBuildDefinedForComparison,
 
@@ -180,9 +176,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
          * - If the selection changes to an invalid selection (e.g. branch is defined, but build is undefined),
          *   the callback is not called.
          */
-        callOnSelectionChange: registerSelectionChangeCallback,
-
-        setBranchAndBuildForComparison: setBranchAndBuildForComparison
+        callOnSelectionChange: registerSelectionChangeCallback
     };
 
 });

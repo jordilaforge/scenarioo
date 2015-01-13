@@ -19,6 +19,9 @@
 
 angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', function ($rootScope, Config, BranchesResource, $q, SelectedBranchAndBuild) {
 
+    var selected;
+    var index;
+
     var branchesAndBuildsForComparisonData = function () {
         var deferred = $q.defer();
         BranchesResource.query({}, function findSelectedBranchAndBuild(branches) {
@@ -32,9 +35,8 @@ angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', f
             };
 
             if (SelectedBranchAndBuild.isDefinedForComparison()) {
-                var selected = SelectedBranchAndBuild.selectedForComparison();
+                selected = SelectedBranchAndBuild.selectedForComparison();
 
-                var index;
                 for (index = 0; index < loadedData.branches.length; index++) {
                     if (loadedData.branches[index].branch.name === selected.branch) {
                         loadedData.selectedBranchForComparison = loadedData.branches[index];
