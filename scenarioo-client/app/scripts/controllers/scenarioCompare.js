@@ -34,6 +34,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
 
     function loadBranchesAndBuildsForComparison() {
         BranchesAndBuildsForComparison.getBranchesAndBuildsForComparison().then(function onSuccess(branchesAndBuildsForComparison) {
+            console.log('Test for Code');
             $scope.branchesAndBuildsForComparison = branchesAndBuildsForComparison;
         }, function onFailure(error) {
             console.log(error);
