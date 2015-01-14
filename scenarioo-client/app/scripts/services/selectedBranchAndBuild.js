@@ -54,8 +54,8 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         }
 
         return {
-            compareBranch: selectedBranchForComparison,
-            compareBuild: selectedBuildForComparison
+            branch: selectedBranchForComparison,
+            build: selectedBuildForComparison
         };
     }
 
@@ -115,6 +115,15 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
             }
         }, true);
 
+    $rootScope.$watch(getSelectedBranchAndBuildForComparison,
+        function (selectedForComparison) {
+            if (isBranchAndBuildDefinedForComparison()) {
+                for (var i = 0; i < selectionChangeCallbacks.length; i++) {
+                  selectionChangeCallbacks[i](selectedForComparison);
+                }
+            }
+        }, true);
+
 
 
     /**
@@ -151,8 +160,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         selected: getSelectedBranchAndBuild,
 
         /**
-         * Returns the currently selected branch and build and the currently selected branch and build for comparison
-         * as a map with the keys 'branch', 'build', 'compareBranch' and 'compareBuild'.
+         * Returns the currently selected branch and build for comparison as a map with the keys 'branch' and 'build'.
          */
         selectedForComparison: getSelectedBranchAndBuildForComparison,
 
