@@ -29,6 +29,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
     var selectedBranchForComparison;
     var selectedBuildForComparison;
     var initialValuesFromUrlAndCookieLoaded = false;
+    var initialValuesFromUrlAndCookieLoadedForComparison = false;
     var selectionChangeCallbacks = [];
 
     function getSelectedBranchAndBuild() {
@@ -46,11 +47,11 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
     }
 
     function getSelectedBranchAndBuildForComparison() {
-        if (!initialValuesFromUrlAndCookieLoaded) {
+        if (!initialValuesFromUrlAndCookieLoadedForComparison) {
             // Here we calculate the selected branch and build because
             // it may not yet be calculated because there was no CONFIG_LOADED_EVENT yet.
             calculateSelectedBranchAndBuildForComparison();
-            initialValuesFromUrlAndCookieLoaded = true;
+            initialValuesFromUrlAndCookieLoadedForComparison = true;
         }
 
         return {
@@ -119,7 +120,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         function (selectedForComparison) {
             if (isBranchAndBuildDefinedForComparison()) {
                 for (var i = 0; i < selectionChangeCallbacks.length; i++) {
-                  selectionChangeCallbacks[i](selectedForComparison);
+                    selectionChangeCallbacks[i](selectedForComparison);
                 }
             }
         }, true);
