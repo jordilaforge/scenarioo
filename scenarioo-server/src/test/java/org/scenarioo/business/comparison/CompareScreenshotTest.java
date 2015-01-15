@@ -85,7 +85,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns50() {
-		Assert.assertEquals("Value was:" + similarityInPercent, 50.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 50.00, similarityInPercent, accuracy);
 	}
 
 	private void givenBothFilesAreHalfEqual() {
@@ -109,7 +109,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns100() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 100.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 100.00, similarityInPercent, accuracy);
 	}
 
 	@Test
@@ -131,11 +131,11 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturnsLessThan10() {
-		Assert.assertTrue("Difference was: " + similarityInPercent, similarityInPercent <= 50);
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent <= 50);
 	}
 
 	private void expectReturns0() {
-		Assert.assertEquals("Value was" + similarityInPercent, 0.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 0.00, similarityInPercent, accuracy);
 	}
 
 
@@ -183,7 +183,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns38() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 38.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 38.00, similarityInPercent, accuracy);
 	}
 
 	private void givenifImg1HeightBigger() {
@@ -263,7 +263,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns25() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 25.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 25.00, similarityInPercent, accuracy);
 		
 	}
 
@@ -282,7 +282,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns6() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 6.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 6.00, similarityInPercent, accuracy);
 		
 	}
 
@@ -317,7 +317,7 @@ public class CompareScreenshotTest {
 	}
 	
 	private void expectReturnsLessThan100() {
-		Assert.assertTrue("Difference was: " + similarityInPercent, similarityInPercent < 100);
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 100);
 	}
 
 	private void givenRealDataWikiChange() {
@@ -343,19 +343,18 @@ public class CompareScreenshotTest {
 	
 	@Test
 	public void ifImageWrongSize() {
-		givenImageWrongSize();
+		givenRealRandomExample();
 
 		whenComparingScreenshots();
 
-		expectError();
+		expectLessThanTwenty();
 	}
 
-	private void expectError() {
-		Assert.assertTrue(true);
-		
+	private void expectLessThanTwenty() {
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 20);
 	}
 
-	private void givenImageWrongSize() {
+	private void givenRealRandomExample() {
 		imageA = FILE_ERROR1;
 		imageB = FILE_ERROR2;
 	}
