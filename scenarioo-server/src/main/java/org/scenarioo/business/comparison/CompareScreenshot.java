@@ -18,7 +18,7 @@ public class CompareScreenshot {
 		checkPreconditions(file1, file2);
 		Image image1 = loadImage(file1);
 		Image image2 = loadImage(file2);
-		return (int) Math.round(100*(compareImages(image1, image2)));
+		return (int) Math.floor(100*(compareImages(image1, image2)));
 	}
 
 	//Method to calculate similarity of two Images returns percentage of similarity
@@ -35,7 +35,7 @@ public class CompareScreenshot {
 		}
 		return compareBufferedImages(img1, img2);
 	}
-	
+
 	//Method for Images with different scale Factors
 	private double compareBufferedImagesNotSameScale(BufferedImage img1, BufferedImage img2) {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {

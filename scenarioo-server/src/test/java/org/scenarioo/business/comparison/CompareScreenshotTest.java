@@ -25,6 +25,8 @@ public class CompareScreenshotTest {
 	private static final String FILE_WIKI_BUILD1_CHANGE = new String("src/test/resources/wiki_build1_change.png");
 	private static final String FILE_ERROR1 = new String("src/test/resources/image_error1.png");
 	private static final String FILE_ERROR2 = new String("src/test/resources/image_error2.png");
+	private static final String FILE_SMALLCHANGE1 = new String("src/test/resources/smallchanges1.png");
+	private static final String FILE_SMALLCHANGE2 = new String("src/test/resources/smallchanges2.png");
 
 
 	private String imageA;
@@ -357,5 +359,23 @@ public class CompareScreenshotTest {
 	private void givenRealRandomExample() {
 		imageA = FILE_ERROR1;
 		imageB = FILE_ERROR2;
+	}
+	
+	@Test
+	public void ifSmallChanges() {
+		givenSmallChanges();
+
+		whenComparingScreenshots();
+
+		expectLessThanHundret();
+	}
+
+	private void expectLessThanHundret() {
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 100);
+	}
+
+	private void givenSmallChanges() {
+		imageA = FILE_SMALLCHANGE1;
+		imageB = FILE_SMALLCHANGE2;
 	}
 }

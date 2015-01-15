@@ -61,13 +61,18 @@ public class ComparisonResource {
 		PageComparison page1 = new PageComparison();
 		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
 		for(int i=0;i<screenshots.size();++i){
-				StepComparison step1page1 = new StepComparison();
-				step1page1.setStepName("Page1Step1"+i);
-				step1page1.setSimilarity(compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(i).getAbsolutePath()));
-				step1page1.setLeftURL(screenshots.get(i).getAbsolutePath());
-				step1page1.setRighURL(screenshots_compare.get(i).getAbsolutePath());
-				stepListPage1.add(step1page1);
-				LOGGER.info("Comparison:"+screenshots.get(i).getAbsolutePath()+screenshots_compare.get(i).getAbsolutePath());
+			for(int j=0;j<screenshots_compare.size();++j){
+				int similarity = compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(j).getAbsolutePath());
+				if(true){
+					StepComparison step1page1 = new StepComparison();
+					step1page1.setStepName("Page1Step1"+i+j);
+					step1page1.setSimilarity(similarity);
+					step1page1.setLeftURL("/compareBranch/"+branchName+"/compareBuild/"+buildName+"/"+screenshots.get(i).getName());
+					step1page1.setRighURL("/compareBranch/"+compareBranch+"/compareBuild/"+compareBuild+"/"+screenshots_compare.get(j).getName());
+					stepListPage1.add(step1page1);
+					LOGGER.info("Comparison:"+screenshots.get(i).getAbsolutePath()+screenshots_compare.get(j).getAbsolutePath());
+				}
+			}
 				
 			
 		}
