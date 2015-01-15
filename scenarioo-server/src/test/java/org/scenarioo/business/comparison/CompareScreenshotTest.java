@@ -342,7 +342,7 @@ public class CompareScreenshotTest {
 
 	
 	@Test
-	public void ifImageWrongSize() {
+	public void ifRealExmapleDifferentScale() {
 		givenRealRandomExample();
 
 		whenComparingScreenshots();
