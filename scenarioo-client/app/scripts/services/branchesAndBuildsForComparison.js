@@ -43,7 +43,7 @@ angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', f
                     }
                 }
 
-                if (angular.isDefinedForComparison(loadedData.selectedBranchForComparison)) {
+                if (angular.isDefined(loadedData.selectedBranchForComparison)) {
                     var allBuildsOnSelectedBranch = loadedData.selectedBranchForComparison.builds;
                     for (index = 0; index < loadedData.selectedBranchForComparison.builds.length; index++) {
                         if (allBuildsOnSelectedBranch[index].linkName === selected.build) {
