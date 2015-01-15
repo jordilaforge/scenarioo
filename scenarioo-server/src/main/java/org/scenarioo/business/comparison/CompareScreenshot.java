@@ -18,7 +18,7 @@ public class CompareScreenshot {
 		checkPreconditions(file1, file2);
 		Image image1 = loadImage(file1);
 		Image image2 = loadImage(file2);
-		return (int) Math.round(100*(compareImages(image1, image2)));
+		return (int) Math.floor(100*(compareImages(image1, image2)));
 	}
 
 	//Method to calculate similarity of two Images returns percentage of similarity
@@ -35,7 +35,7 @@ public class CompareScreenshot {
 		}
 		return compareBufferedImages(img1, img2);
 	}
-	
+
 	//Method for Images with different scale Factors
 	private double compareBufferedImagesNotSameScale(BufferedImage img1, BufferedImage img2) {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {
@@ -45,15 +45,14 @@ public class CompareScreenshot {
 		int area_img2 = img2.getHeight() * img2.getWidth();
 		double area_diff = Math.min(img1.getHeight(), img2.getHeight()) * Math.min(img1.getWidth(), img2.getWidth());
 		double percentageAreaDiff = (area_diff / Math.max(area_img1, area_img2));
-		BufferedImage subimage;
+		BufferedImage subimage1;
+		BufferedImage subimage2;
 		double similarity;
-		if (area_img1 > area_img2) {
-			subimage = img1.getSubimage(img2.getMinX(), img2.getMinY(), img2.getWidth(), img2.getHeight());
-			similarity = compareBufferedImages(subimage, img2);
-		} else {
-			subimage = img2.getSubimage(img1.getMinX(), img1.getMinY(), img1.getWidth(), img1.getHeight());
-			similarity = compareBufferedImages(img1, subimage);
-		}
+		int cutting_width=Math.min(img1.getWidth(), img2.getWidth());
+		int cutting_height=Math.min(img1.getHeight(), img2.getHeight());
+		subimage1 = img1.getSubimage(0, 0, cutting_width, cutting_height);
+		subimage2 = img2.getSubimage(0, 0, cutting_width, cutting_height);	
+		similarity = compareBufferedImages(subimage1, subimage2);
 		return (percentageAreaDiff*similarity);
 	}
 	

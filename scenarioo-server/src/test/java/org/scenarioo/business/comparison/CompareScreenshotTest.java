@@ -23,6 +23,10 @@ public class CompareScreenshotTest {
 	private static final String FILE_WIKI_BUILD1_NOCHANGE = new String("src/test/resources/wiki_build1_nochange.png");
 	private static final String FILE_WIKI_BUILD0_CHANGE = new String("src/test/resources/wiki_build0_change.png");
 	private static final String FILE_WIKI_BUILD1_CHANGE = new String("src/test/resources/wiki_build1_change.png");
+	private static final String FILE_ERROR1 = new String("src/test/resources/image_error1.png");
+	private static final String FILE_ERROR2 = new String("src/test/resources/image_error2.png");
+	private static final String FILE_SMALLCHANGE1 = new String("src/test/resources/smallchanges1.png");
+	private static final String FILE_SMALLCHANGE2 = new String("src/test/resources/smallchanges2.png");
 
 
 	private String imageA;
@@ -83,7 +87,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns50() {
-		Assert.assertEquals("Value was:" + similarityInPercent, 50.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 50.00, similarityInPercent, accuracy);
 	}
 
 	private void givenBothFilesAreHalfEqual() {
@@ -107,7 +111,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns100() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 100.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 100.00, similarityInPercent, accuracy);
 	}
 
 	@Test
@@ -129,11 +133,11 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturnsLessThan10() {
-		Assert.assertTrue("Difference was: " + similarityInPercent, similarityInPercent <= 50);
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent <= 50);
 	}
 
 	private void expectReturns0() {
-		Assert.assertEquals("Value was" + similarityInPercent, 0.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 0.00, similarityInPercent, accuracy);
 	}
 
 
@@ -181,7 +185,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns38() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 38.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 38.00, similarityInPercent, accuracy);
 	}
 
 	private void givenifImg1HeightBigger() {
@@ -261,7 +265,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns25() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 25.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 25.00, similarityInPercent, accuracy);
 		
 	}
 
@@ -280,7 +284,7 @@ public class CompareScreenshotTest {
 	}
 
 	private void expectReturns6() {
-		Assert.assertEquals("Value was: " + similarityInPercent, 6.00, similarityInPercent, accuracy);
+		Assert.assertEquals("Similarity was: " + similarityInPercent, 6.00, similarityInPercent, accuracy);
 		
 	}
 
@@ -315,7 +319,7 @@ public class CompareScreenshotTest {
 	}
 	
 	private void expectReturnsLessThan100() {
-		Assert.assertTrue("Difference was: " + similarityInPercent, similarityInPercent < 100);
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 100);
 	}
 
 	private void givenRealDataWikiChange() {
@@ -338,4 +342,40 @@ public class CompareScreenshotTest {
 		imageB = FILE_WIKI_BUILD1_NOCHANGE;
 	}
 
+	
+	@Test
+	public void ifRealExmapleDifferentScale() {
+		givenRealRandomExample();
+
+		whenComparingScreenshots();
+
+		expectLessThanTwenty();
+	}
+
+	private void expectLessThanTwenty() {
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 20);
+	}
+
+	private void givenRealRandomExample() {
+		imageA = FILE_ERROR1;
+		imageB = FILE_ERROR2;
+	}
+	
+	@Test
+	public void ifSmallChanges() {
+		givenSmallChanges();
+
+		whenComparingScreenshots();
+
+		expectLessThanHundret();
+	}
+
+	private void expectLessThanHundret() {
+		Assert.assertTrue("Similarity was: " + similarityInPercent, similarityInPercent < 100);
+	}
+
+	private void givenSmallChanges() {
+		imageA = FILE_SMALLCHANGE1;
+		imageB = FILE_SMALLCHANGE2;
+	}
 }

@@ -60,19 +60,27 @@ public class ComparisonResource {
 		ArrayList<StepComparison> stepListPage1 = new ArrayList<StepComparison>();
 		PageComparison page1 = new PageComparison();
 		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
+		int similarity=0;
+		int similarity_prev=0;
 		for(int i=0;i<screenshots.size();++i){
-				StepComparison step1page1 = new StepComparison();
-				step1page1.setStepName("Page1Step1"+i);
-				step1page1.setSimilarity(compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(i).getAbsolutePath()));
-				step1page1.setLeftURL(screenshots.get(i).getAbsolutePath());
-				step1page1.setRighURL(screenshots_compare.get(i).getAbsolutePath());
-				stepListPage1.add(step1page1);
-				LOGGER.info("Comparison:"+screenshots.get(i).getAbsolutePath()+screenshots_compare.get(i).getAbsolutePath());
-				
-			
-		}
+			StepComparison step1page1= new StepComparison();
+			for(int j=0;j<screenshots_compare.size();++j){
+				    similarity = compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(j).getAbsolutePath());
+					if(similarity>similarity_prev){
+						step1page1.setSimilarity(similarity);
+						step1page1.setStepName(root.loadStep(branchName, buildName, usecaseName, scenarioName, j).getStepDescription().getTitle());
+						step1page1.setLeftURL("/compareBranch/"+branchName+"/compareBuild/"+buildName+"/"+screenshots.get(i).getName());
+						step1page1.setRighURL("/compareBranch/"+compareBranch+"/compareBuild/"+compareBuild+"/"+screenshots_compare.get(j).getName());
+						LOGGER.info("Comparison: "+screenshots.get(i).getAbsolutePath()+" with: "+screenshots_compare.get(j).getAbsolutePath());
+						
+					}
+					similarity_prev=similarity;
+					
+			}
+			stepListPage1.add(step1page1);
 
-		page1.setPageName("page");
+		}
+		page1.setPageName("page1");
 		page1.setSteplist(stepListPage1);
 		pageList.add(page1);
 		compare.setPagelist(pageList);
