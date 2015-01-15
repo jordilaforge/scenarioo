@@ -23,6 +23,8 @@ public class CompareScreenshotTest {
 	private static final String FILE_WIKI_BUILD1_NOCHANGE = new String("src/test/resources/wiki_build1_nochange.png");
 	private static final String FILE_WIKI_BUILD0_CHANGE = new String("src/test/resources/wiki_build0_change.png");
 	private static final String FILE_WIKI_BUILD1_CHANGE = new String("src/test/resources/wiki_build1_change.png");
+	private static final String FILE_ERROR1 = new String("src/test/resources/image_error1.png");
+	private static final String FILE_ERROR2 = new String("src/test/resources/image_error2.png");
 
 
 	private String imageA;
@@ -338,4 +340,23 @@ public class CompareScreenshotTest {
 		imageB = FILE_WIKI_BUILD1_NOCHANGE;
 	}
 
+	
+	@Test
+	public void ifImageWrongSize() {
+		givenImageWrongSize();
+
+		whenComparingScreenshots();
+
+		expectError();
+	}
+
+	private void expectError() {
+		Assert.assertTrue(true);
+		
+	}
+
+	private void givenImageWrongSize() {
+		imageA = FILE_ERROR1;
+		imageB = FILE_ERROR2;
+	}
 }

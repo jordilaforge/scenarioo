@@ -47,7 +47,7 @@ public class CompareScreenshot {
 		double percentageAreaDiff = (area_diff / Math.max(area_img1, area_img2));
 		BufferedImage subimage;
 		double similarity;
-		if (area_img1 > area_img2) {
+		if (img1.getHeight() > img2.getHeight() && img1.getWidth() > img2.getWidth()) {
 			subimage = img1.getSubimage(img2.getMinX(), img2.getMinY(), img2.getWidth(), img2.getHeight());
 			similarity = compareBufferedImages(subimage, img2);
 		} else {
