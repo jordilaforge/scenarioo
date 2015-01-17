@@ -54,12 +54,16 @@ angular.module('scenarioo.services').factory('ScCompareStepPopup', function (loc
     var stepInPageOccurrence = $routeParams.stepInPageOccurrence;
 
     loadBranchesAndBuilds();
+    loadBranchesAndBuildsForComparison();
 
     function loadBranchesAndBuilds() {
         BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
                 $scope.branchesAndBuilds = branchesAndBuilds;
             }
         );
+    }
+
+    function loadBranchesAndBuildsForComparison() {
         BranchesAndBuildsForComparison.getBranchesAndBuildsForComparison().then(function onSuccess(branchesAndBuildsForComparison) {
                 $scope.branchesAndBuildsForComparison = branchesAndBuildsForComparison;
             }

@@ -74,6 +74,8 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
 
 <!-- screenshot and information -->
 <sc-meta-data-panel linking-variable="stepShowMetadata">
-        <div class="sc-screenshot-border">
-          <img ng-src="{{getScreenShotUrl()}}" class="sc-screenshot"/>
+        <div class="sc-screenshot-border" ng-init='load()'>
+          <img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>
+          <img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>
         </div>
+</sc-meta-data-panel>
