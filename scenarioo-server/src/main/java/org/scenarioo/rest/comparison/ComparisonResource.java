@@ -57,32 +57,39 @@ public class ComparisonResource {
 			LOGGER.info(screenshots_compare.get(i).getAbsolutePath());
 		}
 		CompareScreenshot compare_screenshot = new CompareScreenshot();
-		ArrayList<StepComparison> stepListPage1 = new ArrayList<StepComparison>();
-		PageComparison page1 = new PageComparison();
+		
+
 		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
+		PageComparison page = new PageComparison();
+		ArrayList<StepComparison> stepListPerPage =new ArrayList<StepComparison>();
 		int similarity=0;
 		int similarity_prev=0;
 		for(int i=0;i<screenshots.size();++i){
-			StepComparison step1page1= new StepComparison();
+			StepComparison step= new StepComparison();
 			for(int j=0;j<screenshots_compare.size();++j){
+					LOGGER.info("Comparison: "+screenshots.get(i).getAbsolutePath()+" with: "+screenshots_compare.get(j).getAbsolutePath());
 				    similarity = compare_screenshot.compare(screenshots.get(i).getAbsolutePath(), screenshots_compare.get(j).getAbsolutePath());
-					if(similarity>similarity_prev){
-						step1page1.setSimilarity(similarity);
-						step1page1.setStepName(root.loadStep(branchName, buildName, usecaseName, scenarioName, j).getStepDescription().getTitle());
-						step1page1.setLeftURL("/compareBranch/"+branchName+"/compareBuild/"+buildName+"/"+screenshots.get(i).getName());
-						step1page1.setRighURL("/compareBranch/"+compareBranch+"/compareBuild/"+compareBuild+"/"+screenshots_compare.get(j).getName());
-						LOGGER.info("Comparison: "+screenshots.get(i).getAbsolutePath()+" with: "+screenshots_compare.get(j).getAbsolutePath());
+				    LOGGER.info("Similarity: "+similarity);
+				    if(similarity>similarity_prev){
+						step.setSimilarity(similarity);
+						step.setStepName(root.loadStep(branchName, buildName, usecaseName, scenarioName, j).getStepDescription().getTitle());
+						step.setLeftURL("http://localhost:8080/scenarioo/rest/branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshots.get(i).getName());
+						step.setRighURL("http://localhost:8080/scenarioo/rest/branch/"+compareBranch+"/build/"+compareBuild+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshots_compare.get(j).getName());
 						
 					}
 					similarity_prev=similarity;
 					
 			}
-			stepListPage1.add(step1page1);
+			stepListPerPage.add(step);
+			String pageName = root.loadStep(branchName, buildName, usecaseName, scenarioName, i).getPage().getName();
+			page.setPageName(pageName);	
 
 		}
-		page1.setPageName("page1");
-		page1.setSteplist(stepListPage1);
-		pageList.add(page1);
+		page.setSteplist(stepListPerPage);
+		pageList.add(page);
+		
+		
+		
 		compare.setPagelist(pageList);
 		return compare;
 	}
