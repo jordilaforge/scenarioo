@@ -63,11 +63,24 @@ public class ComparisonResource {
 		ScenarioIdentifier scenarioIdentifierCompare = new ScenarioIdentifier(new BuildIdentifier(compareBranch, compareBuild), usecaseName, scenarioName);
 		ScenarioPageSteps pageStepsCompare = aggregatedDataReader.loadScenarioPageSteps(scenarioIdentifierCompare);
 		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
-		for(int i=0; i<pageSteps.getPagesAndSteps().size();++i){
+		if(pageSteps.getPagesAndSteps().size()==pageStepsCompare.getPagesAndSteps().size()){
+			for(int i=0; i<pageSteps.getPagesAndSteps().size();++i){
 				PageComparison page=compareSteps(pageSteps.getPagesAndSteps().get(i).getSteps(),pageStepsCompare.getPagesAndSteps().get(i).getSteps(),compareBranch,compareBuild,branchName, buildName, usecaseName, scenarioName);
 				page.setPageName(pageSteps.getPagesAndSteps().get(i).getPage().getName());
 				pageList.add(page);
-			
+			}
+		}
+		else{
+			LOGGER.info("NumberOfPages: "+pageSteps.getPagesAndSteps().size()+" NumberofComparePages: "+ pageStepsCompare.getPagesAndSteps().size());
+			for(int i=0; i<pageSteps.getPagesAndSteps().size();++i){
+				for(int j=0; j<pageStepsCompare.getPagesAndSteps().size();++j){
+					if(pageSteps.getPagesAndSteps().get(i).getPage().getName().equals(pageStepsCompare.getPagesAndSteps().get(j).getPage().getName())){
+						PageComparison page=compareSteps(pageSteps.getPagesAndSteps().get(i).getSteps(),pageStepsCompare.getPagesAndSteps().get(j).getSteps(),compareBranch,compareBuild,branchName, buildName, usecaseName, scenarioName);
+						page.setPageName(pageSteps.getPagesAndSteps().get(i).getPage().getName());
+						pageList.add(page);
+					}
+				}
+			}
 		}
 		compare.setPagelist(pageList);
 		return compare;
@@ -86,7 +99,6 @@ public class ComparisonResource {
 					String pathCompare=root.getScreenshotFile(compareBranch, compareBuild, usecaseName, scenarioName, stepsCompare.get(j).getScreenshotFileName()).getAbsolutePath();
 				    CompareScreenshot compare_screenshot = new CompareScreenshot();
 					similarity = compare_screenshot.compare(path,pathCompare);
-					LOGGER.info(similarity);
 				    if(similarity>similarity_prev){
 						step.setSimilarity(similarity);
 						step.setStepName(steps.get(i).getTitle());
@@ -96,6 +108,10 @@ public class ComparisonResource {
 					}
 					similarity_prev=similarity;
 					
+			}
+			if(similarity==0){
+				step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
+				step.setStepName(steps.get(i).getTitle());
 			}
 			stepListPerPage.add(step);
 			
