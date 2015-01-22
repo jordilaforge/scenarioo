@@ -73,9 +73,8 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
 </div>
 
 <!-- screenshot and information -->
-<sc-meta-data-panel linking-variable="stepShowMetadata">
-        <div class="sc-screenshot-border" ng-init='load()'>
-          <img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>
-          <img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>
-        </div>
-</sc-meta-data-panel>
+
+<div id="image-diff" class="sc-screenshot-border" ng-init="initCompare()">
+  <!--<img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>
+  <img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>-->
+</div>

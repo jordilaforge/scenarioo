@@ -54,14 +54,17 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
             initialValuesFromUrlAndCookieLoadedForComparison = true;
         }
 
-        return {
+        var selectedForComparison = {
             branch: selectedBranchForComparison,
             build: selectedBuildForComparison
         };
+
+        return selectedForComparison;
     }
 
     $rootScope.$on(Config.CONFIG_LOADED_EVENT, function () {
         calculateSelectedBranchAndBuild();
+        calculateSelectedBranchAndBuildForComparison();
     });
 
     function calculateSelectedBranchAndBuild() {
@@ -105,6 +108,7 @@ angular.module('scenarioo.services').factory('SelectedBranchAndBuild', function 
         return $location.search();
     }, function () {
         calculateSelectedBranchAndBuild();
+        calculateSelectedBranchAndBuildForComparison();
     }, true);
 
     $rootScope.$watch(getSelectedBranchAndBuild,

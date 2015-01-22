@@ -36,7 +36,6 @@ angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', f
 
             if (SelectedBranchAndBuild.isDefinedForComparison()) {
                 selected = SelectedBranchAndBuild.selectedForComparison();
-                console.log('Test for Code 2');
 
                 for (index = 0; index < loadedData.branches.length; index++) {
                     if (loadedData.branches[index].branch.name === selected.branch) {
@@ -65,4 +64,5 @@ angular.module('scenarioo.services').factory('BranchesAndBuildsForComparison', f
     return {
         getBranchesAndBuildsForComparison: branchesAndBuildsForComparisonData
     };
+
 });
