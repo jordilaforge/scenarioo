@@ -262,16 +262,30 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
         return prefix + 'labels=' + labels.map(encodeURIComponent).join();
     };
 
-    function onComplete(data){
+
+
+    $scope.getScreenCompare = function() {
+      var diffimg;
+      if(typeof $scope.getScreenShotUrl() === 'undefined'){
+          // if undefined handle code
+        diffimg=undefined;
+        }
+      else{
         var diffImage = new Image();
-        diffImage.src = data.getImageDataUrl();
+        var imgDiff=resemble($scope.getScreenShotUrl()).compareTo($scope.getScreenShotUrl2()).onComplete(function(data){
+          console.log(data);
+          console.log(data.getImageDataUrl());
+          /*
+           {
+           misMatchPercentage : 100, // %
+           isSameDimensions: true, // or false
+           getImageDataUrl: function(){}
+           }
+           */
+        });
+       return diffImage.src;
+      }
 
-        $('#image-diff').html(diffImage);
-        console.log('diffImage');
-    }
-
-    $scope.initCompare = function() {
-        $('sc-screenshot-border').resemble($scope.getScreenShotUrl()).compareTo($scope.getScreenShotUrl2()).onComplete(onComplete);
     };
 
 });
