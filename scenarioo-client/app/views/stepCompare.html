@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <sc-breadcrumb></sc-breadcrumb>
-
   <div>
 Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{branchesAndBuilds.selectedBuild.build.date | scDateTime}})
     with Revision: {{branchesAndBuildsForComparison.selectedBuildForComparison.build.revision}} ({{branchesAndBuildsForComparison.selectedBuildForComparison.build.date | scDateTime}}) on Step-Level.
@@ -74,7 +73,10 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
 
 <!-- screenshot and information -->
 
-<div id="image-diff" class="sc-screenshot-border" ng-init="initCompare()">
-  <!--<img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>
-  <img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>-->
+<div id="image-diff" class="sc-screenshot-border">
+  <!--<img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>-->
+  <!--<img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>-->
+  <h1>Resemble Diff Image</h1>
+  <img ng-src="{{getScreenCompare()}}"/>
+  <!--<img ng-src="{{getScreenCompare()}}" alt="before caption" class="sc-screenshot"/>-->
 </div>
