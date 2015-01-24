@@ -262,7 +262,26 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
         return prefix + 'labels=' + labels.map(encodeURIComponent).join();
     };
 
+    $scope.getCompareScreenShot = function(){
+        var diffImage = new Image();
+        var img;
 
+        if(typeof $scope.getScreenShotUrl() === 'undefined'){
+            // if undefined handle code
+            diffImage=undefined;
+        }
+        else {
+            var resembleControl;
+            resembleControl = resemble($scope.getScreenShotUrl()).compareTo($scope.getScreenShotUrl2()).onComplete(function (data) {
+                diffImage.src = data.getImageDataUrl();
+                var ctx = data.getContext('2d');
+                img = new Image();
+                img.src = diffImage.src;
+                ctx.drawImage(img,0,0);
+            });
+        }
+        return img.src;
+    };
 
     $scope.getScreenCompare = function() {
       var diffimg;
