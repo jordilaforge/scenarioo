@@ -39,7 +39,7 @@ public class ComparisonResource {
 	
 	@GET
 	@Produces({ "application/xml" })
-	@Path("{scenarioName}/compareBranch/{compareBranch}/compareBuild/{compareBuild}")
+	@Path("{scenarioName}/cBr/{compareBranch}/cBu/{compareBuild}")
 	public ScenarioComparison readScenarioWithPagesAndSteps(@PathParam("branchName") final String branchName,
 			@PathParam("buildName") final String buildName, @PathParam("usecaseName") final String usecaseName,
 			@PathParam("scenarioName") final String scenarioName, @PathParam("compareBranch") final String compareBranch,
