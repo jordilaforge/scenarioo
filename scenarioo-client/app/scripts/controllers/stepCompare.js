@@ -291,15 +291,17 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
       var img2url = $scope.getScreenShotUrl2();
 
 
-      
-      var diffimgurl;
 
+      var diffimgurl;
+      if($scope.isMode1()){
+        return;
+      }
       if(typeof img1url === 'undefined' || typeof img2url === 'undefined'){
           // if undefined handle code
         return;
         }
       else{
-        var imgDiff=resemble(img1url).compareTo(img2url).onComplete(function(data){
+          var imgDiff=resemble(img1url).compareTo(img2url).onComplete(function(data){
           console.log(data);
           //console.log(data.getImageDataUrl());
           diffimgurl = data.getImageDataUrl();
