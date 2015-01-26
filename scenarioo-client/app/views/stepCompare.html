@@ -73,9 +73,25 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
 
 <!-- screenshot and information -->
 
+<<<<<<< HEAD
 <div id="image-diff">
   <!--<img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>-->
   <!--<img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>-->
   <!--<img ng-src="{{getCompareScreenShot()}}" alt="before caption" />-->
   <img ng-src="{{getScreenCompare()}}" alt="before caption" class="sc-screenshot" />
+=======
+<div id="image-diff" class="sc-screenshot-border">
+  <h1>Resemble Diff Image</h1>
+  <div id="image-diff-m1" ng-hide="isMode1()">
+    <img ng-src="{{getCompareScreenShot()}}" alt="before caption" />
+    <!--<img ng-src="{{getScreenCompare()}}" alt="before caption" class="sc-screenshot" />-->
+  </div>
+  <div id="image-diff-m2" ng-hide="isMode2()" ng-init="initCompare()">
+    <img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>
+    <img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>
+  </div>
+>>>>>>> 9034193280242143da380a9766e8b40d4077617b
 </div>
+
+
+
