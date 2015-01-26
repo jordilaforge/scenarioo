@@ -17,11 +17,46 @@
 
 'use strict';
 
-angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, BranchesAndBuilds, BranchesAndBuildsForComparison) {
+angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
+
+    var useCaseName = $routeParams.useCaseName;
+    var scenarioName = $routeParams.scenarioName;
+    var selectedBranchAndBuild;
+    var selectedBranchAndBuildForComparison;
 
     loadBranchesAndBuilds();
     loadBranchesAndBuildsForComparison();
+    loadData(SelectedBranchAndBuild.selected(),SelectedBranchAndBuild.selectedForComparison());
+    console.log(scenarioName);
+    console.log(useCaseName);
+    console.log(selectedBranchAndBuild.branch);
+    console.log(selectedBranchAndBuild.build);
 
+    function loadData(selected,selectedForComparison) {
+        selectedBranchAndBuild = selected;
+        selectedBranchAndBuildForComparison = selectedForComparison;
+        console.log(selectedBranchAndBuildForComparison);
+        console.log(selectedBranchAndBuild);
+        ScenarioCompareResource.get(
+            {
+                branchName: selected.branch,
+                buildName: selected.build,
+                usecaseName: useCaseName,
+                scenarioName: scenarioName,
+                compareBranch: selectedForComparison.branch,
+                compareBuild: selectedForComparison.build
+            },
+            function(result) {
+                $scope.scenarioName = result.scenarioName;
+                $scope.usecaseName = result.usecaseName;
+                $scope.branchName = result.branchName;
+                $scope.buildName = result.buildName;
+                $scope.compareBranch = result.compareBranch;
+                $scope.compareBuild = result.compareBuild;
+                $scope.pageList = result.pageList;
+                $scope.stepList = result.pageList.stepList;
+            });
+    }
 
     function loadBranchesAndBuilds() {
         BranchesAndBuilds.getBranchesAndBuilds().then(function onSuccess(branchesAndBuilds) {
@@ -34,13 +69,11 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
 
     function loadBranchesAndBuildsForComparison() {
         BranchesAndBuildsForComparison.getBranchesAndBuildsForComparison().then(function onSuccess(branchesAndBuildsForComparison) {
-            console.log('Test for Code');
             $scope.branchesAndBuildsForComparison = branchesAndBuildsForComparison;
         }, function onFailure(error) {
             console.log(error);
         }
         );
     }
-
 
 });
