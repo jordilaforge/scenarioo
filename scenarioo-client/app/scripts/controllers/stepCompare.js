@@ -283,11 +283,8 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
 
 
   $scope.getScreenCompare = function () {
-
     var img1url = $scope.getScreenShotUrl();
     var img2url = $scope.getScreenShotUrl2();
-
-
     var diffimgurl;
     if ($scope.isMode1()) {
       return;
