@@ -284,7 +284,6 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
 
   $scope.getScreenCompare = function () {
 
-
     var img1url = $scope.getScreenShotUrl();
     var img2url = $scope.getScreenShotUrl2();
 
@@ -294,7 +293,6 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
       return;
     }
     if (typeof img1url === 'undefined' || typeof img2url === 'undefined') {
-      // if undefined handle code
       return;
     }
     else {
@@ -302,13 +300,6 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
         console.log(data);
         //console.log(data.getImageDataUrl());
         diffimgurl = data.getImageDataUrl();
-        /*
-         {
-         misMatchPercentage : 100, // %
-         isSameDimensions: true, // or false
-         getImageDataUrl: function(){}
-         }
-         */
       });
       return diffimgurl;
     }
