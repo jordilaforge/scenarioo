@@ -30,22 +30,22 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
     <!-- Pages navigation -->
     <div class="btn-group">
       <div ng-click="goToPreviousPage()" class="btn btn-default" ng-disabled="isFirstPage()" id="prevPageBtn">
-        <i class="icon-with-padding icon-large icon-double-angle-left" tooltip="Previous Page [Ctrl+Left]" tooltip-placement="bottom"></i>
+        <i class="icon-with-padding icon-large icon-double-angle-left"></i>
       </div>
-      <div class="btn btn-default btn-no-hover"><span tooltip="of all pages in this scenario" tooltip-placement="bottom">Page {{getCurrentPageIndexForDisplay()}} of {{stepStatistics.totalNumberOfPagesInScenario}}</span></div>
+      <div class="btn btn-default btn-no-hover">Page {{getCurrentPageIndexForDisplay()}} of {{stepStatistics.totalNumberOfPagesInScenario}}</span></div>
       <div ng-click="goToNextPage()" class="btn btn-default" ng-disabled="isLastPage()" id="nextPageBtn">
-        <i class="icon-with-padding icon-large icon-double-angle-right" tooltip="Next Page [Ctrl+Right]" tooltip-placement="bottom"></i>
+        <i class="icon-with-padding icon-large icon-double-angle-right"></i>
       </div>
     </div>
 
     <!-- Steps navigation -->
     <div class="btn-group">
       <div ng-click="goToPreviousStep()" class="btn btn-default" ng-disabled="isFirstStep()" id="prevStepBtn">
-        <i class="icon-with-padding icon-large icon-angle-left" tooltip="Previous Step [Left]" tooltip-placement="bottom"></i>
+        <i class="icon-with-padding icon-large icon-angle-left"></i>
       </div>
-      <div class="btn btn-default btn-no-hover"><span tooltip="of all steps in this scenario" tooltip-placement="bottom">Step {{getCurrentStepIndexForDisplay()}} of {{stepStatistics.totalNumberOfStepsInScenario}}</span></div>
+      <div class="btn btn-default btn-no-hover">Step {{getCurrentStepIndexForDisplay()}} of {{stepStatistics.totalNumberOfStepsInScenario}}</span></div>
       <div ng-click="goToNextStep()" class="btn btn-default" ng-disabled="isLastStep()" id="nextStepBtn">
-        <i class="icon-with-padding icon-large icon-angle-right" tooltip="Next Step [Right]" tooltip-placement="bottom"></i>
+        <i class="icon-with-padding icon-large icon-angle-right"></i>
       </div>
     </div>
 
@@ -73,10 +73,9 @@ Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{
 
 <!-- screenshot and information -->
 
-<div id="image-diff" class="sc-screenshot-border">
+<div id="image-diff">
   <!--<img ng-src="{{getScreenShotUrl()}}" alt="after caption" class="sc-screenshot"/>-->
   <!--<img ng-src="{{getScreenShotUrl2()}}" alt="before caption" class="sc-screenshot"/>-->
-  <h1>Resemble Diff Image</h1>
-  <img ng-src="{{getCompareScreenShot()}}" alt="before caption" />
-  <!--<img ng-src="{{getScreenCompare()}}" alt="before caption" class="sc-screenshot" />-->
+  <!--<img ng-src="{{getCompareScreenShot()}}" alt="before caption" />-->
+  <img ng-src="{{getScreenCompare()}}" alt="before caption" class="sc-screenshot" />
 </div>

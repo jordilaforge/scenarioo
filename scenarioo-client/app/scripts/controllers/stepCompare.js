@@ -262,38 +262,27 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
         return prefix + 'labels=' + labels.map(encodeURIComponent).join();
     };
 
-    $scope.getCompareScreenShot = function(){
-        var diffImage = new Image();
-        var img;
 
-        if(typeof $scope.getScreenShotUrl() === 'undefined'){
-            // if undefined handle code
-            diffImage=undefined;
-        }
-        else {
-            var resembleControl;
-            resembleControl = resemble($scope.getScreenShotUrl()).compareTo($scope.getScreenShotUrl2()).onComplete(function (data) {
-                diffImage.src = data.getImageDataUrl();
-                var ctx = data.getContext('2d');
-                img = new Image();
-                img.src = diffImage.src;
-                ctx.drawImage(img,0,0);
-            });
-        }
-        return img.src;
-    };
 
     $scope.getScreenCompare = function() {
-      var diffimg;
-      if(typeof $scope.getScreenShotUrl() === 'undefined'){
+
+
+      var img1url = $scope.getScreenShotUrl();
+      var img2url = $scope.getScreenShotUrl2();
+
+
+      
+      var diffimgurl;
+
+      if(typeof img1url === 'undefined' || typeof img2url === 'undefined'){
           // if undefined handle code
-        diffimg=undefined;
+        return;
         }
       else{
-        var diffImage = new Image();
-        var imgDiff=resemble($scope.getScreenShotUrl()).compareTo($scope.getScreenShotUrl2()).onComplete(function(data){
+        var imgDiff=resemble(img1url).compareTo(img2url).onComplete(function(data){
           console.log(data);
-          console.log(data.getImageDataUrl());
+          //console.log(data.getImageDataUrl());
+          diffimgurl = data.getImageDataUrl();
           /*
            {
            misMatchPercentage : 100, // %
@@ -302,7 +291,7 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
            }
            */
         });
-       return diffImage.src;
+       return diffimgurl;
       }
 
     };
