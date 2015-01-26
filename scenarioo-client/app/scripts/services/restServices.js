@@ -218,15 +218,15 @@ angular.module('scenarioo.services')
     })
 
     .factory('ScenarioCompareResource', function (ScenariooResource) {
-      return ScenariooResource('/branch/:branchName/build/:buildName/usecase/:usecaseName/scenario/:scenarioName/cBr/:compareBranch/cBu/:compareBuild',
-        {
-          branchName: '@branchName',
-          buildName: '@buildName',
-          usecaseName: '@usecaseName',
-          scenarioName: '@scenarioName',
-          compareBranch: '@compareBranch',
-          compareBuild: '@compareBuild'
-        }, {});
+        return ScenariooResource('/branch/:branchName/build/:buildName/usecase/:usecaseName/scenario/:scenarioName/cBr/:compareBranch/cBu/:compareBuild',
+            {
+                branchName: '@branchName',
+                buildName: '@buildName',
+                usecaseName: '@usecaseName',
+                scenarioName: '@scenarioName',
+                compareBranch: '@compareBranch',
+                compareBuild: '@compareBuild'
+            }, {});
     })
 
     .factory('ObjectsForTypeResource', function (ScenariooResource) {
