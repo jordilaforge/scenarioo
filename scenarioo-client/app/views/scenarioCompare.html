@@ -21,3 +21,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{branchesAndBuilds.selectedBuild.build.date | scDateTime}})
   with Revision: {{branchesAndBuildsForComparison.selectedBuildForComparison.build.revision}} ({{branchesAndBuildsForComparison.selectedBuildForComparison.build.date | scDateTime}}) on Scenario-Level.
 </div>
+
+<div>
+  <!-- steps -->
+  <div class="row step-view">
+    <div ng-repeat="stepList in pageList">
+      <div id="leftCompare">
+          <img ng-src="{{stepList.leftURL}}"/>
+      </div>
+      <div id="centerCompare">
+        <p>{{stepList.similarity}}</p>
+      </div>
+      <div id="rightCompare">
+        <img ng-src="{{stepList.righURL}}"/>
+      </div>
+    </div>
+  </div>
+</div>
