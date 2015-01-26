@@ -200,6 +200,26 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
         };
     }
 
+    var mode1 = true;
+    var mode2 = false;
+    $scope.goToMode1 = function(){
+        mode1 = true;
+        mode2 = false;
+    };
+
+    $scope.goToMode2 = function() {
+        mode1 = false;
+        mode2 = true;
+    };
+
+    $scope.isMode1 = function () {
+        return mode1;
+    };
+
+    $scope.isMode2 = function () {
+        return mode2;
+    };
+
     // This URL is only used internally, not for sharing
     $scope.getScreenShotUrl = function () {
         if (angular.isUndefined($scope.step)) {
@@ -235,7 +255,7 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
 
 
     $scope.go = function (step) {
-        $location.path('/step/' + (step.useCaseName || useCaseName) + '/' + (step.scenarioName || scenarioName) + '/' + step.pageName + '/' + step.pageOccurrence + '/' + step.stepInPageOccurrence);
+        $location.path('/step/' + (step.useCaseName || useCaseName) + '/' + (step.scenarioName || scenarioName) + '/' + step.pageName + '/' + step.pageOccurrence + '/' + step.stepInPageOccurrence + '/compare');
     };
 
     $scope.getCurrentUrlForSharing = function () {
@@ -307,4 +327,8 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
 
     };
 
-});
+    $scope.initCompare = function () {
+        $('#image-diff-m2').twentytwenty();
+    };
+
+  });
