@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /*global $:false */
+/*global resemble */
 'use strict';
 
 angular.module('scenarioo.controllers').controller('StepCompareCtrl', function ($scope, $location, $routeParams, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild, StepResource, GlobalHotkeysService, HostnameAndPort) {
