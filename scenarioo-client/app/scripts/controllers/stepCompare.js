@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+/*global $:false */
 'use strict';
 
-angular.module('scenarioo.controllers').controller('StepCompareCtrl', function ($scope, $location, $routeParams, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild, StepResource, GlobalHotkeysService, HostnameAndPort, resemble, jquery) {
+angular.module('scenarioo.controllers').controller('StepCompareCtrl', function ($scope, $location, $routeParams, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild, StepResource, GlobalHotkeysService, HostnameAndPort) {
 
     var useCaseName = $routeParams.useCaseName;
     var scenarioName = $routeParams.scenarioName;
