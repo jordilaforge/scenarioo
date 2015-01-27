@@ -51,13 +51,6 @@ public class ComparisonResource {
 
 	private ScenarioComparison createCompare(String scenarioName, String usecaseName, String branchName, String buildName, String compareBranch, String compareBuild) {
 		ScenarioComparison compare = new ScenarioComparison();
-		compare.setScenarioName(scenarioName);
-		compare.setUsecaseName(usecaseName);
-		compare.setBranchName(branchName);
-		compare.setBuildName(buildName);
-		compare.setCompareBranch(compareBranch);
-		compare.setCompareBuild(compareBuild);
-		
 		ScenarioIdentifier scenarioIdentifier = new ScenarioIdentifier(new BuildIdentifier(branchName, buildName), usecaseName, scenarioName);
 		ScenarioPageSteps pageSteps = aggregatedDataReader.loadScenarioPageSteps(scenarioIdentifier);
 		ScenarioIdentifier scenarioIdentifierCompare = new ScenarioIdentifier(new BuildIdentifier(compareBranch, compareBuild), usecaseName, scenarioName);
