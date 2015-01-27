@@ -285,7 +285,7 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
     $scope.getScreenCompare = function () {
         var img1url = $scope.getScreenShotUrl();
         var img2url = $scope.getScreenShotUrl2();
-        var diffimgurl;
+        var diffImageUrl ='';
         if ($scope.isMode1()) {
             return;
         }
@@ -293,12 +293,11 @@ angular.module('scenarioo.controllers').controller('StepCompareCtrl', function (
             return;
         }
         else {
-            var imgDiff = resemble(img1url).compareTo(img2url).onComplete(function (data) {
+            resemble(img1url).compareTo(img2url).onComplete(function (data) {
                 console.log(data);
-                //console.log(data.getImageDataUrl());
-                diffimgurl = data.getImageDataUrl();
+                diffImageUrl = data.getImageDataUrl();
             });
-            return diffimgurl;
+            return diffImageUrl;
         }
 
     };
