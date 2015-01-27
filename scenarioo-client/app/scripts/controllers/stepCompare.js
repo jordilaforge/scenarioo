@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('scenarioo.controllers').controller('StepCompareCtrl', function ($scope, $location, $routeParams, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild, StepResource, GlobalHotkeysService, HostnameAndPort, resemble) {
+angular.module('scenarioo.controllers').controller('StepCompareCtrl', function ($scope, $location, $routeParams, BranchesAndBuilds, BranchesAndBuildsForComparison, SelectedBranchAndBuild, StepResource, GlobalHotkeysService, HostnameAndPort, resemble, twentytwenty) {
 
     var useCaseName = $routeParams.useCaseName;
     var scenarioName = $routeParams.scenarioName;
