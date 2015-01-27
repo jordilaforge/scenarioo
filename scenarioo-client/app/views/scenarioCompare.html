@@ -24,25 +24,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="sc-screenshot-border">
   <!-- steps -->
-  <div>
-    <h2>Step Comparison of Scenario {{$scope.scenarioName}}</h2>
-
-         <div ng-repeat="result in resultList">
-           <div ng-repeat="pages in result">
-            <h3>{{pages.pageName}}</h3>
-             <div ng-repeat="steps in pages">
-               <div ng-repeat="steps2 in steps track by $index">
-               <h4>{{steps2.stepName}}</h4>
-               <table border="1" width="100%">
-                 <tr>
-                   <td><img ng-src="http://localhost:8080/scenarioo/rest/{{steps2.leftURL}}" class="img.sc-screenshot"/></td>
-                   <td>Ähnlichkeit: {{steps2.similarity}}</td>
-                   <td><img ng-src="http://localhost:8080/scenarioo/rest/{{steps2.righURL}}"/></td>
-                 </tr>
-               </table>
-                 </div>
-             </div>
-           </div>
-  </div>
+  <div ng-repeat="result in resultList">
+    <div ng-repeat="pages in result">
+      <h3>{{pages.pageName}}</h3>
+      <div ng-repeat="steps in pages">
+        <div ng-repeat="steps2 in steps | filter:steps2" ng-show="$index == 0">
+          <h4>{{steps2.stepName}}</h4>
+          <table border="1" width="100%">
+            <tr>
+              <td><img ng-src="http://localhost:8080/scenarioo/rest/{{steps2.leftURL}}" style="width: 100%"/></td>
+              <td>Ähnlichkeit: {{steps2.similarity}} %</td>
+              <td><img ng-src="http://localhost:8080/scenarioo/rest/{{steps2.righURL}}" style="width: 100%"/></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
