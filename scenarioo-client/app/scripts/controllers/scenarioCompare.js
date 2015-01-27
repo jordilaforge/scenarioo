@@ -27,16 +27,10 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
     loadBranchesAndBuilds();
     loadBranchesAndBuildsForComparison();
     loadData(SelectedBranchAndBuild.selected(),SelectedBranchAndBuild.selectedForComparison());
-    console.log(scenarioName);
-    console.log(useCaseName);
-    console.log(selectedBranchAndBuild.branch);
-    console.log(selectedBranchAndBuild.build);
 
     function loadData(selected,selectedForComparison) {
         selectedBranchAndBuild = selected;
         selectedBranchAndBuildForComparison = selectedForComparison;
-        console.log(selectedBranchAndBuildForComparison);
-        console.log(selectedBranchAndBuild);
         ScenarioCompareResource.get(
             {
                 branchName: selected.branch,
@@ -47,6 +41,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
                 compareBuild: selectedForComparison.build
             },
             function(result) {
+                $scope.scenarioComparison = result.scenarioComparison;
                 $scope.scenarioName = result.scenarioName;
                 $scope.usecaseName = result.usecaseName;
                 $scope.branchName = result.branchName;
@@ -54,7 +49,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
                 $scope.compareBranch = result.compareBranch;
                 $scope.compareBuild = result.compareBuild;
                 $scope.pageList = result.pageList;
-                $scope.stepList = result.pageList.stepList;
+                $scope.stepList = $scope.pageList.stepList;
             });
     }
 

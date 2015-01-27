@@ -22,19 +22,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   with Revision: {{branchesAndBuildsForComparison.selectedBuildForComparison.build.revision}} ({{branchesAndBuildsForComparison.selectedBuildForComparison.build.date | scDateTime}}) on Scenario-Level.
 </div>
 
-<div>
+<div class="sc-screenshot-border">
   <!-- steps -->
   <div class="row step-view">
+    <h1>{{scenarioName}}</h1>
+    <div ng-repeat="pageList in scenarioComparison">
+      <h2>{{pageList.pageName}}</h2>
     <div ng-repeat="stepList in pageList">
-      <div id="leftCompare">
-          <img ng-src="{{stepList.leftURL}}"/>
-      </div>
-      <div id="centerCompare">
-        <p>{{stepList.similarity}}</p>
-      </div>
-      <div id="rightCompare">
-        <img ng-src="{{stepList.righURL}}"/>
-      </div>
+      <h2>{{stepList.stepName}}</h2>
+      <table>
+        <tr>
+          <td>{{stepList.leftURL}}</td>
+          <td>{{stepList.similarity}}</td>
+          <td>{{stepList.righURL}}</td>
+        </tr>
+      </table>
+    </div>
+      <p>-------------</p>
     </div>
   </div>
 </div>
