@@ -23,6 +23,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
     var scenarioName = $routeParams.scenarioName;
     var selectedBranchAndBuild;
     var selectedBranchAndBuildForComparison;
+    var resultList;
 
     loadBranchesAndBuilds();
     loadBranchesAndBuildsForComparison();
@@ -40,16 +41,19 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
                 compareBranch: selectedForComparison.branch,
                 compareBuild: selectedForComparison.build
             },
+
             function(result) {
-                $scope.scenarioComparison = result.scenarioComparison;
+                //$scope.scenarioComparison = result.scenarioComparison;
                 $scope.scenarioName = result.scenarioName;
-                $scope.usecaseName = result.usecaseName;
-                $scope.branchName = result.branchName;
-                $scope.buildName = result.buildName;
-                $scope.compareBranch = result.compareBranch;
-                $scope.compareBuild = result.compareBuild;
                 $scope.pageList = result.pageList;
-                $scope.stepList = $scope.pageList.stepList;
+                //$scope.stepList = result.stepList;
+                //$scope.stepName = result.stepName;
+                //$scope.leftURL = result.leftURL;
+                //$scope.righURL = result.righURL;
+                //$scope.similarity = result.similarity;
+
+                resultList = result;
+                console.log(resultList);
             });
     }
 

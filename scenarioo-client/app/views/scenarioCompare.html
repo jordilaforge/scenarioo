@@ -24,21 +24,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="sc-screenshot-border">
   <!-- steps -->
-  <div class="row step-view">
-    <h1>{{scenarioName}}</h1>
-    <div ng-repeat="pageList in scenarioComparison">
-      <h2>{{pageList.pageName}}</h2>
-    <div ng-repeat="stepList in pageList">
-      <h2>{{stepList.stepName}}</h2>
-      <table>
-        <tr>
-          <td>{{stepList.leftURL}}</td>
-          <td>{{stepList.similarity}}</td>
-          <td>{{stepList.righURL}}</td>
-        </tr>
-      </table>
-    </div>
+  <div>
+    <h2>Step Comparison of Scenario {{scenarioName}}</h2>
+    <div nginit="pageLists ={{pageList}} ">
+         <div ng-repeat="pL in pageLists">
+      <h3>{{pL.pageName}}</h3>
+      <!--<div ng-repeat="stepList in pageList.stepList">
+        <h2>{{stepList.stepName}}</h2>
+        <table>
+          <tr>
+            <td><img src="{{stepList.leftURL}}"/></td>
+            <td>{{stepList.similarity}}</td>
+            <td><img src="{{stepList.righURL}}"/></td>
+          </tr>
+        </table>
+      </div>-->
       <p>-------------</p>
     </div>
+  </div>
   </div>
 </div>
