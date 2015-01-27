@@ -42,17 +42,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
             },
 
             function(result) {
-                //$scope.scenarioComparison = result.scenarioComparison;
-                $scope.scenarioName = result.scenarioName;
-                //$scope.pageList = result.pageList;
-                //$scope.stepList = result.stepList;
-                //$scope.stepName = result.stepName;
-                //$scope.leftURL = result.leftURL;
-                //$scope.righURL = result.righURL;
-                //$scope.similarity = result.similarity;
-
                 $scope.resultList = result;
-                console.log(result);
             });
     }
 
