@@ -38,7 +38,7 @@ public class ComparisonResource {
 	private static final Logger LOGGER = Logger.getLogger(StepResource.class);
 	
 	@GET
-	@Produces({ "application/xml" })
+	@Produces({ "application/xml", "application/json" })
 	@Path("{scenarioName}/cBr/{compareBranch}/cBu/{compareBuild}")
 	public ScenarioComparison readScenarioWithPagesAndSteps(@PathParam("branchName") final String branchName,
 			@PathParam("buildName") final String buildName, @PathParam("usecaseName") final String usecaseName,
