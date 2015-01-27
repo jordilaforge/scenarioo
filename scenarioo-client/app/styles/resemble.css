@@ -1,13 +1,11 @@
-
-
 h1 {
     text-align: center;
 }
 
 body {
-    padding-top: 60px;  
+    padding-top: 60px;
 }
-    
+
 footer {
     margin-top: 45px;
     padding: 35px 0 36px;
@@ -26,7 +24,7 @@ footer {
     position: relative;
 }
     .drop-zone.drag-over{
-        border: 10px dashed #0088CC;		
+        border: 10px dashed #0088CC;
     }
     .drop-zone img {
         width: 400px;
@@ -49,7 +47,7 @@ footer {
     position: relative;
 }
     .small-drop-zone.drag-over{
-        border: 10px dashed #0088CC;        
+        border: 10px dashed #0088CC;
     }
     .small-drop-zone img {
         width: 330px;
