@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
+angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams, HostnameAndPort, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
 
     var useCaseName = $routeParams.useCaseName;
     var scenarioName = $routeParams.scenarioName;
@@ -44,6 +44,7 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
             function(result) {
                 $scope.resultList = result;
             });
+        $scope.imageURL = HostnameAndPort.forLink();
     }
 
     function loadBranchesAndBuilds() {
