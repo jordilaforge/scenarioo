@@ -240,7 +240,7 @@ public class CompareScreenshotTest {
 	}
 
 	@Test
-	public void ifImagesAreOneQuaterTheSameBig_returns75() {
+	public void ifImagesAreOneQuaterTheSameBig_returns25() {
 		givenBothFilesAreOneQuaterEqualBig();
 
 		whenComparingScreenshots();
