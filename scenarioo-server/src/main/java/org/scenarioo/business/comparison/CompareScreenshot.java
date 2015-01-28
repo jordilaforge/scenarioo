@@ -11,9 +11,14 @@ public class CompareScreenshot {
 
 	final int threshold = 0;
 
-	//Method to calculate similarity of two Files(JPG/PNG) returns percentage of similarity
-	//0% = Images totally different
-	//100% = Images are the same
+	/**
+	 * Method to calculate similarity of two Files(JPG/PNG) returns percentage of similarity
+	 * 0% = Images totally different
+	 * 100% = Images are the same
+	 * @param file1
+	 * @param file2
+	 * @return
+	 */
 	public int compare(String file1, String file2) {
 		checkPreconditions(file1, file2);
 		Image image1 = loadImage(file1);
@@ -21,9 +26,15 @@ public class CompareScreenshot {
 		return (int) Math.floor(100*(compareImages(image1, image2)));
 	}
 
-	//Method to calculate similarity of two Images returns percentage of similarity
-	//0.00 = Images totally different
-	//100.00 = Images are the same
+
+	/**
+	 *Method to calculate similarity of two Images returns percentage of similarity
+	 *0.00 = Images totally different
+	 *100.00 = Images are the same
+	 * @param imageA
+	 * @param imageB
+	 * @return
+	 */
 	private double compareImages(Image imageA, Image imageB) {
 		BufferedImage img1 = imageToBufferedImage(imageA);
 		BufferedImage img2 = imageToBufferedImage(imageB);
@@ -36,7 +47,12 @@ public class CompareScreenshot {
 		return compareBufferedImages(img1, img2);
 	}
 
-	//Method for Images with different scale Factors
+	/**
+	 * Method for Images with different scale Factors
+	 * @param img1
+	 * @param img2
+	 * @return
+	 */
 	private double compareBufferedImagesNotSameScale(BufferedImage img1, BufferedImage img2) {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {
 			throw new IllegalArgumentException("Images have same Resolution!");
@@ -56,9 +72,15 @@ public class CompareScreenshot {
 		return (percentageAreaDiff*similarity);
 	}
 	
-	//Method to calculate similarity of two BufferedImages returns percentage of similarity
-	//0.00 = Images totally different
-	//100.00 = Images are the same
+
+	/**
+	 * Method to calculate similarity of two BufferedImages returns percentage of similarity
+	 * 0.00 = Images totally different
+	 * 100.00 = Images are the same
+	 * @param img1
+	 * @param img2
+	 * @return
+	 */
 	private double compareBufferedImages(BufferedImage img1, BufferedImage img2) {
 		if ((img1.getHeight() == img2.getHeight()) && (img1.getWidth() == img2.getWidth())) {
 			int pixelsimilarity = 0;
@@ -79,8 +101,11 @@ public class CompareScreenshot {
 	}
 
 
-
-	// Method to transfer Image to BufferedImage
+	/**
+	 * Method to transfer Image to BufferedImage
+	 * @param img
+	 * @return
+	 */
 	protected static BufferedImage imageToBufferedImage(Image img) {
 		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = bi.createGraphics();
@@ -88,7 +113,11 @@ public class CompareScreenshot {
 		return bi;
 	}
 
-	// Method to ReadFile (JPG/PNG tested)
+	/**
+	 * Method to ReadFile (JPG/PNG tested)
+	 * @param filename
+	 * @return
+	 */
 	protected static Image loadImage(String filename) {
 		FileInputStream in = null;
 		try {
@@ -106,7 +135,11 @@ public class CompareScreenshot {
 		return bi;
 	}
 	
-	//Method to Check if one of the Files is not null
+	/**
+	 * Method to Check if one of the Files is not null
+	 * @param fileA
+	 * @param fileB
+	 */
 	private void checkPreconditions(String fileA, String fileB) {
 		if (fileA == null) {
 			throw new IllegalArgumentException("First file argument must not be null.");
