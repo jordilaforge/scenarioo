@@ -4,10 +4,15 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+
 import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
+import org.scenarioo.rest.step.StepResource;
 
 
 public class CompareScreenshot {
+	private static final Logger LOGGER = Logger.getLogger(CompareScreenshot.class);
 	 /**
      *threshold tunes how strict the comparison is
      *0 = only exactly same color of pixel
@@ -24,10 +29,15 @@ public class CompareScreenshot {
 	 * @return				percentage of similarity between image1 and image2
 	 */
 	public int compare(String file1, String file2) {
+		long startTime = System.currentTimeMillis();
 		checkPreconditions(file1, file2);
 		Image image1 = loadImage(file1);
 		Image image2 = loadImage(file2);
-		return (int) Math.floor(100*(compareImages(image1, image2)));
+		int similarity =(int) Math.floor(100*(compareImages(image1, image2)));
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		LOGGER.info("Comparing screenshots similarity: "+similarity+"% time: "+ totalTime+"ms");
+		return similarity;
 	}
 
 

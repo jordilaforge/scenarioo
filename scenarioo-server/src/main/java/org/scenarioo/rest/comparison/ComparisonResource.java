@@ -14,6 +14,7 @@ import org.scenarioo.api.ScenarioDocuReader;
 import org.scenarioo.business.comparison.CompareScreenshot;
 import org.scenarioo.dao.aggregates.AggregatedDataReader;
 import org.scenarioo.dao.aggregates.ScenarioDocuAggregationDAO;
+import org.scenarioo.model.docu.aggregates.scenarios.PageSteps;
 import org.scenarioo.model.docu.aggregates.scenarios.ScenarioPageSteps;
 import org.scenarioo.model.docu.entities.Step;
 import org.scenarioo.model.docu.entities.StepDescription;
@@ -35,7 +36,7 @@ public class ComparisonResource {
 	private final AggregatedDataReader aggregatedDataReader = new ScenarioDocuAggregationDAO(
 			configurationRepository.getDocumentationDataDirectory());
 	
-	private static final Logger LOGGER = Logger.getLogger(StepResource.class);
+	private static final Logger LOGGER = Logger.getLogger(ComparisonResource.class);
 	
 	@GET
 	@Produces({ "application/xml", "application/json" })
@@ -56,7 +57,7 @@ public class ComparisonResource {
 		ScenarioIdentifier scenarioIdentifierCompare = new ScenarioIdentifier(new BuildIdentifier(compareBranch, compareBuild), usecaseName, scenarioName);
 		ScenarioPageSteps pageStepsCompare = aggregatedDataReader.loadScenarioPageSteps(scenarioIdentifierCompare);
 		ArrayList<PageComparison> pageList = new ArrayList<PageComparison>();
-		if(pageSteps.getPagesAndSteps().size()==pageStepsCompare.getPagesAndSteps().size()){
+		if(pagesSame(pageSteps.getPagesAndSteps(),pageStepsCompare.getPagesAndSteps())){
 			for(int i=0; i<pageSteps.getPagesAndSteps().size();++i){
 				PageComparison page=compareSteps(pageSteps.getPagesAndSteps().get(i).getSteps(),pageStepsCompare.getPagesAndSteps().get(i).getSteps(),compareBranch,compareBuild,branchName, buildName, usecaseName, scenarioName);
 				page.setPageName(pageSteps.getPagesAndSteps().get(i).getPage().getName());
@@ -64,21 +65,58 @@ public class ComparisonResource {
 			}
 		}
 		else{
-			LOGGER.info("NumberOfPages: "+pageSteps.getPagesAndSteps().size()+" NumberofComparePages: "+ pageStepsCompare.getPagesAndSteps().size());
 			for(int i=0; i<pageSteps.getPagesAndSteps().size();++i){
+				PageComparison page =null;
+				boolean found=false;;
 				for(int j=0; j<pageStepsCompare.getPagesAndSteps().size();++j){
 					if(pageSteps.getPagesAndSteps().get(i).getPage().getName().equals(pageStepsCompare.getPagesAndSteps().get(j).getPage().getName())){
-						PageComparison page=compareSteps(pageSteps.getPagesAndSteps().get(i).getSteps(),pageStepsCompare.getPagesAndSteps().get(j).getSteps(),compareBranch,compareBuild,branchName, buildName, usecaseName, scenarioName);
+						page=compareSteps(pageSteps.getPagesAndSteps().get(i).getSteps(),pageStepsCompare.getPagesAndSteps().get(j).getSteps(),compareBranch,compareBuild,branchName, buildName, usecaseName, scenarioName);
 						page.setPageName(pageSteps.getPagesAndSteps().get(i).getPage().getName());
-						pageList.add(page);
+						found=true;
 					}
 				}
+				if(found==false){
+					page=noComparePage(pageSteps.getPagesAndSteps().get(i).getSteps(),branchName, buildName, usecaseName, scenarioName);
+					page.setPageName(pageSteps.getPagesAndSteps().get(i).getPage().getName());
+				}
+				pageList.add(page);
 			}
 		}
 		compare.setPagelist(pageList);
 		return compare;
 	}
 	
+	private PageComparison noComparePage(List<StepDescription> steps, String branchName, String buildName, String usecaseName, String scenarioName) {
+		PageComparison page = new PageComparison();
+		ArrayList<StepComparison> stepListPerPage =new ArrayList<StepComparison>();
+		for(int i=0;i<steps.size();++i){
+			StepComparison step= new StepComparison();
+			step.setSimilarity(0);
+			step.setStepName(steps.get(i).getTitle());
+			step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
+			stepListPerPage.add(step);
+			page.setSteplist(stepListPerPage);
+		}
+		return page;
+	}
+
+
+	private boolean pagesSame(List<PageSteps> pagesAndSteps, List<PageSteps> pagesAndStepsCompare) {
+		if(pagesAndSteps.size()==pagesAndStepsCompare.size()){
+			for(int i=0;i<pagesAndSteps.size();++i){
+				int counter=0;
+				if(pagesAndSteps.get(i).getPage().getName().equals(pagesAndStepsCompare.get(i).getPage().getName())){
+					++counter;
+				}
+				if(counter==i){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+
 	private PageComparison compareSteps(List<StepDescription> steps, List<StepDescription> stepsCompare, String compareBranch, String compareBuild, String branchName, String buildName, String usecaseName, String scenarioName) {
 		ScenarioDocuReader root = new ScenarioDocuReader(configurationRepository.getDocumentationDataDirectory());
 		PageComparison page = new PageComparison();
@@ -87,6 +125,7 @@ public class ComparisonResource {
 		int similarity_prev=0;
 		for(int i=0;i<steps.size();++i){
 			StepComparison step= new StepComparison();
+			similarity_prev=0;
 			for(int j=0;j<stepsCompare.size();++j){
 					String path=root.getScreenshotFile(branchName, buildName, usecaseName, scenarioName, steps.get(i).getScreenshotFileName()).getAbsolutePath();
 					String pathCompare=root.getScreenshotFile(compareBranch, compareBuild, usecaseName, scenarioName, stepsCompare.get(j).getScreenshotFileName()).getAbsolutePath();
