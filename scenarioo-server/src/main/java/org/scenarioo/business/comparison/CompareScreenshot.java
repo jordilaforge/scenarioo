@@ -8,16 +8,20 @@ import javax.imageio.ImageIO;
 
 
 public class CompareScreenshot {
-
+	 /**
+     *threshold tunes how strict the comparison is
+     *0 = only exactly same color of pixel
+     *more than 0 = kind of the same color
+     */
 	final int threshold = 0;
 
 	/**
 	 * Method to calculate similarity of two Files(JPG/PNG) returns percentage of similarity
 	 * 0% = Images totally different
 	 * 100% = Images are the same
-	 * @param file1
-	 * @param file2
-	 * @return
+	 * @param file1 		image1 for comparison 
+	 * @param file2			image2 for comparison
+	 * @return				percentage of similarity between image1 and image2
 	 */
 	public int compare(String file1, String file2) {
 		checkPreconditions(file1, file2);
@@ -31,9 +35,9 @@ public class CompareScreenshot {
 	 *Method to calculate similarity of two Images returns percentage of similarity
 	 *0.00 = Images totally different
 	 *100.00 = Images are the same
-	 * @param imageA
-	 * @param imageB
-	 * @return
+	 * @param imageA		image1 for comparison
+	 * @param imageB		image2 for comparison 
+	 * @return				percentage of similarity between image1 and image2
 	 */
 	private double compareImages(Image imageA, Image imageB) {
 		BufferedImage img1 = imageToBufferedImage(imageA);
@@ -49,9 +53,9 @@ public class CompareScreenshot {
 
 	/**
 	 * Method for Images with different scale Factors
-	 * @param img1
-	 * @param img2
-	 * @return
+	 * @param img1			image1 for comparison
+	 * @param img2			image2 for comparison
+	 * @return				percentage of similarity between image1 and image2
 	 */
 	private double compareBufferedImagesNotSameScale(BufferedImage img1, BufferedImage img2) {
 		if (img1.getWidth() == img2.getWidth() & img1.getHeight() == img2.getHeight()) {
@@ -77,9 +81,9 @@ public class CompareScreenshot {
 	 * Method to calculate similarity of two BufferedImages returns percentage of similarity
 	 * 0.00 = Images totally different
 	 * 100.00 = Images are the same
-	 * @param img1
-	 * @param img2
-	 * @return
+	 * @param img1			image1 for comparison
+	 * @param img2			image2 for comparison
+	 * @return				percentage of similarity between image1 and image2
 	 */
 	private double compareBufferedImages(BufferedImage img1, BufferedImage img2) {
 		if ((img1.getHeight() == img2.getHeight()) && (img1.getWidth() == img2.getWidth())) {
@@ -103,8 +107,8 @@ public class CompareScreenshot {
 
 	/**
 	 * Method to transfer Image to BufferedImage
-	 * @param img
-	 * @return
+	 * @param img		image to convert to BufferedImage
+	 * @return			BufferedImage of image
 	 */
 	protected static BufferedImage imageToBufferedImage(Image img) {
 		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
@@ -115,8 +119,8 @@ public class CompareScreenshot {
 
 	/**
 	 * Method to ReadFile (JPG/PNG tested)
-	 * @param filename
-	 * @return
+	 * @param filename		filepath of file
+	 * @return				image
 	 */
 	protected static Image loadImage(String filename) {
 		FileInputStream in = null;
@@ -137,8 +141,8 @@ public class CompareScreenshot {
 	
 	/**
 	 * Method to Check if one of the Files is not null
-	 * @param fileA
-	 * @param fileB
+	 * @param fileA			image1 for comparison
+	 * @param fileB			image2 for comparison
 	 */
 	private void checkPreconditions(String fileA, String fileB) {
 		if (fileA == null) {
