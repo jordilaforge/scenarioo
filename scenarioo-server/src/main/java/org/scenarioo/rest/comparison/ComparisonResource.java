@@ -135,7 +135,7 @@ public class ComparisonResource {
 						step.setSimilarity(similarity);
 						step.setStepName(steps.get(i).getTitle());
 						step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
-						step.setRighURL("branch/"+compareBranch+"/build/"+compareBuild+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+stepsCompare.get(j).getScreenshotFileName());
+						step.setRightURL("branch/"+compareBranch+"/build/"+compareBuild+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+stepsCompare.get(j).getScreenshotFileName());
 						
 					}
 					similarity_prev=similarity;

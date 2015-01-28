@@ -24,19 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div class="sc-screenshot-border">
   <!-- steps -->
-  <div ng-repeat="result in resultList">
-    <div ng-repeat="pages in result">
-      <h3>{{pages.pageName}}</h3>
-      <div ng-repeat="steps in pages">
-        <div ng-repeat="steps2 in steps | filter:steps2" ng-show="$index == 0">
-          <h4>{{steps2.stepName}}</h4>
-          <table border="1" width="100%">
-            <tr>
-              <td><img ng-src="{{imageURL}}rest/{{steps2.leftURL}}" style="width: 100%"/></td>
-              <td>Ähnlichkeit: {{steps2.similarity}} %</td>
-              <td><img ng-src="{{imageURL}}rest/{{steps2.righURL}}" style="width: 100%"/></td>
-            </tr>
-          </table>
+  <div ng-repeat="pages in resultList">
+    <div ng-repeat="page in pages">
+      <h2>{{page.pageName}}</h2>
+      <div ng-repeat="step in page.steplist">
+        <h3>{{step.name}}</h3>
+        <h3>{{step.similarity}}</h3>
+        <h3>{{step.leftURL}}</h3>
+        <h3>{{step.rightURL}}</h3>
         </div>
       </div>
     </div>

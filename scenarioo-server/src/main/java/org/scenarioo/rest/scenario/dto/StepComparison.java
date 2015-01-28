@@ -11,7 +11,7 @@ public class StepComparison {
 	private String stepName;
 	private int similarity;
 	private String leftURL;
-	private String righURL;
+	private String rightURL;
 	public String getStepName() {
 		return stepName;
 	}
@@ -30,11 +30,11 @@ public class StepComparison {
 	public void setLeftURL(String leftURL) {
 		this.leftURL = leftURL;
 	}
-	public String getRighURL() {
-		return righURL;
+	public String getRightURL() {
+		return rightURL;
 	}
-	public void setRighURL(String righURL) {
-		this.righURL = righURL;
+	public void setRightURL(String rightURL) {
+		this.rightURL = rightURL;
 	}
 	
 }
