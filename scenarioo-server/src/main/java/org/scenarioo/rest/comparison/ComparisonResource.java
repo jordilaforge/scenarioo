@@ -1,6 +1,8 @@
 package org.scenarioo.rest.comparison;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,7 +156,15 @@ public class ComparisonResource {
 
 
 	private String buildScreenshotUrl(String branchName, String buildName, String usecaseName, String scenarioName, String screenshotFileName) {
-		String path = "branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
+		String ip="";
+		try {
+			ip=InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String server ="http://"+ip+":8080/scenarioo-fork-jordilaforge/rest/";
+		String path = server+"branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
 		return path;
 	}
 
