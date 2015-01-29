@@ -17,9 +17,9 @@
 
 'use strict';
 
-angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams, HostnameAndPort, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
+angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams,HostnameAndPort, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
 
-    var useCaseName = $routeParams.useCaseName;
+    var useCaseName = $routeParams.useCaseName.replace(/%20/g, " ");
     var scenarioName = $routeParams.scenarioName;
     var selectedBranchAndBuild;
     var selectedBranchAndBuildForComparison;
@@ -35,10 +35,11 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
             {
                 branchName: selected.branch,
                 buildName: selected.build,
-                usecaseName: useCaseName,
-                scenarioName: scenarioName,
                 compareBranch: selectedForComparison.branch,
-                compareBuild: selectedForComparison.build
+                compareBuild: selectedForComparison.build,
+                usecaseName: useCaseName,
+                scenarioName: scenarioName
+
             },
 
             function(result) {

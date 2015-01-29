@@ -93,7 +93,7 @@ public class ComparisonResource {
 			StepComparison step= new StepComparison();
 			step.setSimilarity(0);
 			step.setStepName(steps.get(i).getTitle());
-			step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
+			step.setLeftURL(buildScreenshotUrl(branchName,buildName,usecaseName,scenarioName,steps.get(i).getScreenshotFileName()));
 			stepListPerPage.add(step);
 			page.setSteplist(stepListPerPage);
 		}
@@ -134,15 +134,15 @@ public class ComparisonResource {
 				    if(similarity>similarity_prev){
 						step.setSimilarity(similarity);
 						step.setStepName(steps.get(i).getTitle());
-						step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
-						step.setRightURL("branch/"+compareBranch+"/build/"+compareBuild+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+stepsCompare.get(j).getScreenshotFileName());
+						step.setLeftURL(buildScreenshotUrl(branchName,buildName,usecaseName,scenarioName,steps.get(i).getScreenshotFileName()));
+						step.setRightURL(buildScreenshotUrl(compareBranch,compareBuild,usecaseName,scenarioName,stepsCompare.get(j).getScreenshotFileName()));
 						
 					}
 					similarity_prev=similarity;
 					
 			}
 			if(similarity==0){
-				step.setLeftURL("branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+steps.get(i).getScreenshotFileName());
+				step.setLeftURL(buildScreenshotUrl(branchName,buildName,usecaseName,scenarioName,steps.get(i).getScreenshotFileName()));
 				step.setStepName(steps.get(i).getTitle());
 			}
 			stepListPerPage.add(step);
@@ -150,6 +150,14 @@ public class ComparisonResource {
 		}
 		page.setSteplist(stepListPerPage);	
 		return page;
+	}
+
+
+	private String buildScreenshotUrl(String branchName, String buildName, String usecaseName, String scenarioName, String screenshotFileName) {
+		String server = "http://localhost:8080/scenarioo/rest";
+		LOGGER.info("server path:"+configurationRepository.getConfiguration().toString());
+		String path = "/branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
+		return server+path;
 	}
 
 
