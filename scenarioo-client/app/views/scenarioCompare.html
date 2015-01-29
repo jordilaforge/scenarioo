@@ -27,13 +27,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <div ng-repeat="pages in resultList">
     <div ng-repeat="page in pages">
       <h2>{{page.pageName}}</h2>
-      <div ng-repeat="step in page.steplist">
-        <h3>{{step.name}}</h3>
-        <h3>{{step.similarity}}</h3>
-        <h3>{{step.leftURL}}</h3>
-        <h3>{{step.rightURL}}</h3>
-        </div>
-      </div>
-    </div>
+          <div ng-repeat="step in page.steplist">
+            <table class="table">
+            <h3>{{step.name}}</h3>
+            <tbody>
+            <tr>
+              <td><img ng-src="{{imageURL}}rest/{{step.leftURL}}" class="sc-screenshot"/></td>
+              <td><h1>{{step.similarity}}%</h1></td>
+              <td><img ng-src="{{imageURL}}rest/{{step.rightURL}}" class="sc-screenshot"/></td>
+            </tr>
+            </tbody>
+            </table>
+          </div>
+     </div>
   </div>
 </div>
