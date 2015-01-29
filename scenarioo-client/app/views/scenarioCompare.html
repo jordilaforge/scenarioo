@@ -16,29 +16,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <sc-breadcrumb></sc-breadcrumb>
-
-<div>
-  Page to compare Revision: {{branchesAndBuilds.selectedBuild.build.revision}} ({{branchesAndBuilds.selectedBuild.build.date | scDateTime}})
-  with Revision: {{branchesAndBuildsForComparison.selectedBuildForComparison.build.revision}} ({{branchesAndBuildsForComparison.selectedBuildForComparison.build.date | scDateTime}}) on Scenario-Level.
-</div>
-
-<div class="sc-screenshot-border">
-  <!-- steps -->
-  <div ng-repeat="pages in resultList">
-    <div ng-repeat="page in pages">
-      <h2>{{page.pageName}}</h2>
-          <div ng-repeat="step in page.steplist">
-            <table class="table">
-            <h3>{{step.name}}</h3>
-            <tbody>
-            <tr>
-              <td><img ng-src="{{step.leftURL}}" class="sc-screenshot"/></td>
-              <td><h1>{{step.similarity}}%</h1></td>
-              <td><img ng-src="{{step.rightURL}}" class="sc-screenshot"/></td>
-            </tr>
-            </tbody>
-            </table>
-          </div>
-     </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h1>{{branchesAndBuilds.selectedBuild.build.revision}}</h1>
+      <h3 align="center">({{branchesAndBuilds.selectedBuild.build.date | scDateTime}})</h3>
+    </div>
+    <div class="col-md-3">
+      <h1>compare</h1>
+      <h1>with</h1>
+    </div>
+    <div class="col-md-3">
+      <h1>{{branchesAndBuildsForComparison.selectedBuildForComparison.build.revision}}</h1>
+      <h3 align="center">({{branchesAndBuildsForComparison.selectedBuildForComparison.build.date | scDateTime}})</h3>
+    </div>
   </div>
 </div>
+
+
+<div ng-repeat="pages in resultList" class="container">
+  <div ng-repeat="page in pages">
+    <h2>pagename: {{page.pageName}}</h1>
+  <div ng-repeat="step in page.steplist" class="row">
+    <h3>stepname: {{step.stepName}}</h2>
+    <div class="col-md-3">
+      <img ng-src="{{imageURL}}rest/{{step.leftURL}}" class="sc-screenshot"/>
+    </div>
+    <div class="col-md-3">
+      <h1 align="center">similarity: {{step.similarity}}%</h1>
+    </div>
+    <div class="col-md-3">
+      <img ng-src="{{imageURL}}rest/{{step.rightURL}}" class="sc-screenshot"/>
+    </div>
+  </div>
+</div>
+</div>
+
+
+

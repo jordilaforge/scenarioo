@@ -154,10 +154,8 @@ public class ComparisonResource {
 
 
 	private String buildScreenshotUrl(String branchName, String buildName, String usecaseName, String scenarioName, String screenshotFileName) {
-		String server = "http://localhost:8080/scenarioo/rest";
-		LOGGER.info("server path:"+configurationRepository.getConfiguration().toString());
-		String path = "/branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
-		return server+path;
+		String path = "branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
+		return path;
 	}
 
 
