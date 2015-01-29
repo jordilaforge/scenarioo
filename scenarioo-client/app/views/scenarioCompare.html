@@ -36,17 +36,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 <div ng-repeat="pages in resultList" class="container">
   <div ng-repeat="page in pages">
-    <h2>pagename: {{page.pageName}}</h1>
+    <h2>pagename: {{page.pageName}}</h2>
   <div ng-repeat="step in page.steplist" class="row">
-    <h3>stepname: {{step.stepName}}</h2>
+    <h3>stepname: {{step.stepName}}</h3>
     <div class="col-md-3">
-      <img ng-src="{{step.leftURL}}" class="sc-screenshot"/>
+      <img ng-src="{{imageURL}}rest/{{step.leftURL}}" class="sc-screenshot"/>
     </div>
     <div class="col-md-3">
       <h1 align="center">similarity: {{step.similarity}}%</h1>
     </div>
     <div class="col-md-3">
-      <img ng-src="{{step.rightURL}}" class="sc-screenshot" ng-if="step.similarity > 0"/>
+      <img ng-src="{{imageURL}}rest/{{step.rightURL}}" class="sc-screenshot" ng-if="step.similarity > 0"/>
       <h1 ng-if="step.similarity == 0"/>no match found</h1>
     </div>
   </div>

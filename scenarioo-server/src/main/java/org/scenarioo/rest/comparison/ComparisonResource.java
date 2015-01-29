@@ -156,15 +156,7 @@ public class ComparisonResource {
 
 
 	private String buildScreenshotUrl(String branchName, String buildName, String usecaseName, String scenarioName, String screenshotFileName) {
-		String ip="";
-		try {
-			ip=InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String server ="http://"+ip+":8080/scenarioo-fork-jordilaforge/rest/";
-		String path = server+"branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
+		String path = "branch/"+branchName+"/build/"+buildName+"/usecase/"+usecaseName+"/scenario/"+scenarioName+"/image/"+screenshotFileName;
 		return path;
 	}
 
