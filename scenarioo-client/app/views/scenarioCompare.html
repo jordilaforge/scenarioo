@@ -46,7 +46,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <h1 align="center">similarity: {{step.similarity}}%</h1>
     </div>
     <div class="col-md-3">
-      <img ng-src="{{imageURL}}rest/{{step.rightURL}}" class="sc-screenshot"/>
+      <img ng-src="{{imageURL}}rest/{{step.rightURL}}" class="sc-screenshot" ng-if="step.similarity > 0"/>
+      <h1 ng-if="step.similarity == 0"/>no match found</h1>
     </div>
   </div>
 </div>
