@@ -65,11 +65,4 @@ angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', functi
         }
         );
     }
-
-    function MyCtrl($scope, $timeout) {
-        var path = 'https://si0.twimg.com/profile_images/';
-        $timeout(function () {
-        $scope.path = path + '2149314222/square.png';
-        }, 1000);
-    }
 });
