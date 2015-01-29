@@ -19,7 +19,7 @@
 
 angular.module('scenarioo.controllers').controller('ScenarioCompareCtrl', function ($scope, $routeParams,HostnameAndPort, SelectedBranchAndBuild, BranchesAndBuilds, BranchesAndBuildsForComparison, ScenarioCompareResource) {
 
-    var useCaseName = $routeParams.useCaseName.replace(/%20/g, " ");
+    var useCaseName = $routeParams.useCaseName.replace(/%20/g, ' ' );
     var scenarioName = $routeParams.scenarioName;
     var selectedBranchAndBuild;
     var selectedBranchAndBuildForComparison;
